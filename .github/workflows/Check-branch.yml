@@ -1,0 +1,16 @@
+name: Check Source Branch
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch
+        if: github.event.pull_request.head.ref != 'dev'
+        run: |
+          echo "Error: Only merges from the 'dev' branch are allowed."
+          exit 1
+        
