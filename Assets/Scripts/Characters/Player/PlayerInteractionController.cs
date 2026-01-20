@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
@@ -20,18 +21,26 @@ public class PlayerInteractionController : MonoBehaviour
             if (Camera.main != null) rayOrigin = Camera.main.transform;
     }
 
-    private void Update() => DetectInteractable();
+    private void Update()
+    {
+        Debug.DrawRay(rayOrigin.position, rayOrigin.forward * interactionRange, Color.red);
+    }
+
+    private void HandleInteraction()
+    {
+        DetectInteractable();
+        _currentInteractable?.Interact();
+        _currentInteractable = null;
+    }
     
     private void DetectInteractable()
     {
         var ray = new Ray(rayOrigin.position, rayOrigin.forward);
-        
+
         if (Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionLayer))
         {
-            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red);
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
         }
+            
     }
-
-    private void HandleInteraction() => _currentInteractable?.Interact();
 }

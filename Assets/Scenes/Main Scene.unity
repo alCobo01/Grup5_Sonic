@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4459864850019384738, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 170
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4459864850019384738, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: m_LocalPosition.z
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 972311843}
   - component: {fileID: 972311842}
   - component: {fileID: 972311841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -778,7 +778,7 @@ MonoBehaviour:
   interactionRange: 3
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   rayOrigin: {fileID: 1490534601}
 --- !u!114 &1896872954
 MonoBehaviour:

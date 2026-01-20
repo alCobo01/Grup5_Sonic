@@ -26,6 +26,6 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed) OnInteractEvent?.Invoke();   
+        if (context.performed) OnInteractEvent.Invoke();   
     }
 }
