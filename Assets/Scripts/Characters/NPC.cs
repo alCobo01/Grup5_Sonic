@@ -14,8 +14,6 @@ public class NPC : MonoBehaviour, IInteractable
     private int _dialogueIndex;
     private bool _isTyping, _isDialogueActive;
     
-    public bool CanInteract() => !_isDialogueActive;
-
     public void Interact()
     {
         if (_isDialogueActive) 
