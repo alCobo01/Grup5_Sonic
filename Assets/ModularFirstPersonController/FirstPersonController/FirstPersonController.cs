@@ -381,11 +381,7 @@ public class FirstPersonController : MonoBehaviour
         {
             Debug.Log(currentSpeed);
 
-            Vector3 input = new Vector3(
-                Input.GetAxis("Horizontal"),
-                0,
-                Input.GetAxis("Vertical")
-                );
+            Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
             bool hasInput = input.magnitude > 0.1f;
 
