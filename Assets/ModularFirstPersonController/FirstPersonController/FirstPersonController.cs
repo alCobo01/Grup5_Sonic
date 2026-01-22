@@ -55,6 +55,15 @@ public class FirstPersonController : MonoBehaviour
 
     #region Movement Variables
 
+    //Mine Movement Variables
+    private float moveTimer;          // Cuánto tiempo llevas moviéndote
+    private float currentSpeed;      // Velocidad actual
+    public float minSpeed = 5f;      // Velocidad inicial
+    public float maxSpeed = 999f;     // Velocidad máxima (sprint automático)
+    public float accelerationTime = 0.2f; // Tiempo para llegar al sprint
+
+
+
     public bool playerCanMove = true;
     public float walkSpeed = 5f;
     public float maxVelocityChange = 10f;
@@ -370,6 +379,53 @@ public class FirstPersonController : MonoBehaviour
 
         if (playerCanMove)
         {
+            Debug.Log(currentSpeed);
+
+            Vector3 input = new Vector3(
+                Input.GetAxis("Horizontal"),
+                0,
+                Input.GetAxis("Vertical")
+                );
+
+            bool hasInput = input.magnitude > 0.1f;
+
+            if (hasInput)
+            {
+                moveTimer += Time.fixedDeltaTime;
+            }
+            else
+            {
+                moveTimer -= Time.fixedDeltaTime * 2f;
+            }
+
+            moveTimer = Mathf.Clamp(moveTimer, 0, accelerationTime);
+
+            // Curva
+            float t = moveTimer / accelerationTime;
+            float curvedT = Mathf.Pow(t, 3f);   // ajusta potencia aquí
+
+            currentSpeed = Mathf.Lerp(walkSpeed, sprintSpeed, curvedT);
+
+            Vector3 targetVelocity = transform.TransformDirection(input) * currentSpeed;
+
+            // Física igual que antes
+            Vector3 velocity = rb.linearVelocity;
+            Vector3 velocityChange = targetVelocity - velocity;
+            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+            velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+            velocityChange.y = 0;
+
+            rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        }
+
+        #endregion
+
+        /*
+         OLD MOVEMENT CODE
+                #region Movement
+
+        if (playerCanMove)
+        {
             // Calculate how fast we should be moving
             Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -439,6 +495,7 @@ public class FirstPersonController : MonoBehaviour
         }
 
         #endregion
+         */
     }
 
     // Sets isGrounded based on a raycast sent straigth down from the player object
