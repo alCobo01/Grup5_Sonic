@@ -56,11 +56,10 @@ public class FirstPersonController : MonoBehaviour
     #region Movement Variables
 
     //Mine Movement Variables
+    // El min speed es el de walk y el max speed es el de sprint
     private float moveTimer;          // Cuánto tiempo llevas moviéndote
     private float currentSpeed;      // Velocidad actual
-    public float minSpeed = 5f;      // Velocidad inicial
-    public float maxSpeed = 999f;     // Velocidad máxima (sprint automático)
-    public float accelerationTime = 0.2f; // Tiempo para llegar al sprint
+    private float accelerationTime = 3f; // Tiempo para llegar al sprint
 
 
 
@@ -81,7 +80,7 @@ public class FirstPersonController : MonoBehaviour
     public float sprintCooldown = .5f;
     public float sprintFOV = 80f;
     public float sprintFOVStepTime = 10f;
-
+    
     // Sprint Bar
     public bool useSprintBar = true;
     public bool hideBarWhenFull = true;
@@ -98,7 +97,7 @@ public class FirstPersonController : MonoBehaviour
     private float sprintBarHeight;
     private bool isSprintCooldown = false;
     private float sprintCooldownReset;
-
+   
     #endregion
 
     #region Jump
@@ -282,7 +281,7 @@ public class FirstPersonController : MonoBehaviour
         #endregion
 
         #region Sprint
-
+        
         if(enableSprint)
         {
             if(isSprinting)
@@ -329,7 +328,7 @@ public class FirstPersonController : MonoBehaviour
                 sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
             }
         }
-
+        
         #endregion
 
         #region Jump
@@ -375,11 +374,19 @@ public class FirstPersonController : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(currentSpeed);
         #region Movement
 
         if (playerCanMove)
         {
-            Debug.Log(currentSpeed);
+            if (currentSpeed > walkSpeed)
+            {
+                isSprinting = true;
+            }
+            else
+            {
+                isSprinting = false;
+            }
 
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -536,6 +543,7 @@ public class FirstPersonController : MonoBehaviour
         {
             transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
             walkSpeed /= speedReduction;
+            playerCanMove = true;
 
             isCrouched = false;
         }
@@ -545,6 +553,7 @@ public class FirstPersonController : MonoBehaviour
         {
             transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
             walkSpeed *= speedReduction;
+            playerCanMove = false;
 
             isCrouched = true;
         }
@@ -603,7 +612,7 @@ public class FirstPersonController : MonoBehaviour
 
         EditorGUILayout.Space();
         GUILayout.Label("Modular First Person Controller", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 16 });
-        GUILayout.Label("By Jess Case", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Normal, fontSize = 12 });
+        GUILayout.Label("By Miquel Manzano, hehe", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Normal, fontSize = 12 });
         GUILayout.Label("version 1.0.1", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Normal, fontSize = 12 });
         EditorGUILayout.Space();
 
