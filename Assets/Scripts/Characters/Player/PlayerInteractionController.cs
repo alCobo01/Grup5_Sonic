@@ -20,11 +20,16 @@ public class PlayerInteractionController : MonoBehaviour
         if (rayOrigin == null)
             if (Camera.main != null) rayOrigin = Camera.main.transform;
     }
-    
+
+    private void Update()
+    {
+        Debug.DrawRay(rayOrigin.position, rayOrigin.forward * interactionRange, Color.violetRed);
+    }
+
     private void HandleInteraction()
     {
         DetectInteractable();
-        _currentInteractable?.Interact();
+        _currentInteractable?.Interact(gameObject);
         _currentInteractable = null;
     }
     

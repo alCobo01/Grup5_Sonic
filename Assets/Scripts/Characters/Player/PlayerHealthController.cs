@@ -3,8 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(HealthBehaviour))]
 public class PlayerHealthController : MonoBehaviour, IDamageable
 {
-    [Header("Shield values")]
-    [SerializeField] private int maxShield = 50;
+    public bool IsInvincible { get; set; }
 
     private int _currentShield;
     private HealthBehaviour _health;
@@ -18,13 +17,16 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     private void OnDisable() => _health.OnDeath -= HandleDeath;
 
     // Modify shield methods
-    private void ModifyShield(int amount) => _currentShield += amount;
+    public void AddShield(int amount) => _currentShield += amount;
+    public void RemoveShield(int amount) => _currentShield = Mathf.Max(0, _currentShield - amount);
     
     // Modify health methods
     public void AddHealth(int boost) => _health.ModifyHealth(boost);
 
     public void TakeDamage(int damage)
     {
+        if (IsInvincible) return;
+
         // To compare with shield, we have to have positive values
         damage = Mathf.Abs(damage);
         if (damage <= _currentShield) _currentShield -= damage;
