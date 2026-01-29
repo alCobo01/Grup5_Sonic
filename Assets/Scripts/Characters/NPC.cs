@@ -14,7 +14,7 @@ public class NPC : MonoBehaviour, IInteractable
     private int _dialogueIndex;
     private bool _isTyping, _isDialogueActive;
     
-    public void Interact()
+    public void Interact(GameObject interactor)
     {
         if (_isDialogueActive) 
             NextLine();
@@ -57,7 +57,7 @@ public class NPC : MonoBehaviour, IInteractable
         _isTyping = true;
         dialogueText.SetText("");
 
-        foreach(char letter in dialogueData.dialogueLines[_dialogueIndex])
+        foreach(var letter in dialogueData.dialogueLines[_dialogueIndex])
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(dialogueData.typingSpeed);
