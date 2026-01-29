@@ -7,6 +7,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 {
     public event UnityAction OnAttackEvent = delegate { };
     public event UnityAction OnInteractEvent = delegate { };
+    public event UnityAction<bool> OnAimEvent = delegate { };
     
     private InputSystem_Actions _inputActions;
     
@@ -27,5 +28,11 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed) OnInteractEvent.Invoke();   
+    }
+    
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnAimEvent.Invoke(true);
+        if (context.canceled) OnAimEvent.Invoke(false);
     }
 }
