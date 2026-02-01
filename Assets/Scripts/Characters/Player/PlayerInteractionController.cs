@@ -39,6 +39,5 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionLayer))
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
-        
     }
 }
