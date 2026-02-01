@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
-[RequireComponent(typeof(IAttack))]
 public class PlayerAttackController : MonoBehaviour
 {
     private PlayerInputController _inputController;
