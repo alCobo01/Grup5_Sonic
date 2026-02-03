@@ -9,7 +9,6 @@ public class PowerUpPickup : MonoBehaviour, IInteractable
         if (interactor != null && interactor.TryGetComponent(out PlayerPowerUpController powerUpController))
         {
             powerUpController.ActivatePowerUp(powerUpData);
-            // play pickup sound
             Destroy(gameObject);
         }
     }
