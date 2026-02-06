@@ -4,8 +4,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Miquel is tha best :3")]
-    [Header("Movement")]
-    public float speed = 6f;
 
     [Header("Acceleration")]
     public float maxSpeed = 8f;
