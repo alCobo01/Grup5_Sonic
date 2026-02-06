@@ -17,6 +17,6 @@ public class PauseMenu : BaseMenu
             ShowMenu();
         }
         gamePaused = !gamePaused; }
-    private void OnEnable() { Player.UsePauseMenu += TogglePause; }
-    private void OnDisable() { Player.UsePauseMenu -= TogglePause; }
+    //private void OnEnable() { Player.UsePauseMenu += TogglePause; }
+    //private void OnDisable() { Player.UsePauseMenu -= TogglePause; }
 }

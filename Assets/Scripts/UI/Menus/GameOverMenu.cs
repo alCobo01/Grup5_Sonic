@@ -7,11 +7,11 @@ public class GameOverMenu : BaseMenu
 {
     private void OnEnable() 
     {
-        Player.UseGameOverMenu += ShowMenu;
+        //Player.UseGameOverMenu += ShowMenu;
     }
     private void OnDisable() 
     {
-        Player.UseGameOverMenu -= ShowMenu;
+        //Player.UseGameOverMenu -= ShowMenu;
     }
     public void TryAgain() 
     {

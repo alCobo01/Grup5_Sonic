@@ -80,7 +80,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // Frenado suave
             Vector3 brake = Vector3.ClampMagnitude(-horizontalVelocity, deceleration * Time.fixedDeltaTime);
             rb.AddForce(brake, ForceMode.VelocityChange);
         }
