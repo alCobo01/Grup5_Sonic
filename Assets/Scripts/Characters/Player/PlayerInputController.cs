@@ -7,6 +7,7 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 {
     public event UnityAction OnAttackEvent = delegate { };
     public event UnityAction OnInteractEvent = delegate { };
+    public static event UnityAction OnPauseGameEvent;
     public event UnityAction<bool> OnAimEvent = delegate { };
     
     private InputSystem_Actions _inputActions;
@@ -34,5 +35,10 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
     {
         if (context.performed) OnAimEvent.Invoke(true);
         if (context.canceled) OnAimEvent.Invoke(false);
+    }
+
+    public void OnPauseGame(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnPauseGameEvent.Invoke();
     }
 }

@@ -1,21 +1,20 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem.XR.Haptics;
 
 [RequireComponent(typeof(HealthBehaviour))]
 public class PlayerHealthController : MonoBehaviour, IDamageable
 {
+    public static event UnityAction OnDeath;
+    public static event UnityAction OnHealthChange;
     public bool IsInvincible { get; set; }
 
     private int _currentShield;
     private HealthBehaviour _health;
 
-    private void Awake()
-    {
-        _health = GetComponent<HealthBehaviour>();
-    }
-
-    private void OnEnable() => _health.OnDeath += HandleDeath;
-    private void OnDisable() => _health.OnDeath -= HandleDeath;
-
+    private void Awake() => _health = GetComponent<HealthBehaviour>();
+    
     // Modify shield methods
     public void AddShield(int amount) => _currentShield += amount;
     public void RemoveShield(int amount) => _currentShield = Mathf.Max(0, _currentShield - amount);
@@ -37,12 +36,13 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
             _health.ModifyHealth(-damage);
         }
         else _health.ModifyHealth(-damage);
+        
+        if (_health.CurrentHealth < 0) OnDeath?.Invoke();
     }
-    public void InstantKill() => _health.Kill();
-    
-    private void HandleDeath()
+
+    public void InstantKill()
     {
-        Debug.Log("Player Died");
-        // game manager call
-    }
+        _health.Kill();
+        OnDeath?.Invoke();
+    } 
 }
