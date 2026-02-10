@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     public float acceleration = 20f;
     public float deceleration = 25f;
 
+    [Header("Jump")]
+    public float jumpPower = 5f;
+    public KeyCode jumpKey = KeyCode.Space;
 
     [Header("Mouse Look")]
     public float mouseSensitivity = 2f;
@@ -28,6 +31,10 @@ public class Player : MonoBehaviour
     public Camera playerCamera;
     private Rigidbody rb;
 
+    [Header("Check Ground")]
+    public float groundCheckDistance = 0.9f;
+    public LayerMask groundLayer;
+    private bool isGrounded = false;
 
     private void Awake()
     {
@@ -47,6 +54,13 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Look();
+        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        {
+            Jump();
+        }
+
+
+        isGrounded = CheckGround();
     }
 
     private void FixedUpdate()
@@ -103,4 +117,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Jump()
+    {
+        // Adds force to the player rigidbody to jump
+        if (isGrounded)
+        {
+            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+            isGrounded = false;
+        }
+    }
+
+    private bool CheckGround()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        //Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
+
+        return Physics.Raycast(
+            origin,
+            Vector3.down,
+            groundCheckDistance,
+            groundLayer
+        );
+    }
 }
