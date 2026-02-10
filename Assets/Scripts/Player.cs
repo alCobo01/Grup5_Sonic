@@ -15,6 +15,15 @@ public class Player : MonoBehaviour
     public float jumpPower = 5f;
     public KeyCode jumpKey = KeyCode.Space;
 
+    [Header("Crouch & Boost")]
+    public KeyCode crouchKey = KeyCode.LeftControl;
+    public float maxCrouchChargeTime = 4f;
+    public float minBoostSpeed = 2f;
+    public float maxBoostSpeed = 40f;
+
+    private bool isCrouching = false;
+    private float crouchTimer = 0f;
+
     [Header("Mouse Look")]
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 80f;
@@ -24,6 +33,7 @@ public class Player : MonoBehaviour
     public float fov = 60f;
     public float fovIncreaseSpeed = 80f;
     public float fovIncreaseThreshold = 2f;
+
     private float yaw;
     private float pitch;
 
@@ -34,6 +44,7 @@ public class Player : MonoBehaviour
     [Header("Check Ground")]
     public float groundCheckDistance = 0.9f;
     public LayerMask groundLayer;
+
     private bool isGrounded = false;
 
     private void Awake()
@@ -54,11 +65,8 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Look();
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
-        {
-            Jump();
-        }
-
+        Jump();
+        HandleCrouch();
 
         isGrounded = CheckGround();
     }
@@ -95,6 +103,9 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
+        if (isCrouching)
+            return;
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
@@ -119,13 +130,51 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        // Adds force to the player rigidbody to jump
-        if (isGrounded)
+        if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
-            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
-            isGrounded = false;
+            // Adds force to the player rigidbody to jump
+            if (isGrounded)
+            {
+                rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+                isGrounded = false;
+            }
         }
     }
+
+    private void HandleCrouch()
+    {
+        if (Input.GetKey(crouchKey))
+        {
+            isCrouching = true;
+            crouchTimer += Time.deltaTime;
+        }
+
+        if (Input.GetKeyUp(crouchKey))
+        {
+            BoostBasedOnCharge();
+            crouchTimer = 0f;
+            isCrouching = false;
+        }
+    }
+
+    private void BoostBasedOnCharge()
+    {
+        float chargePercent = Mathf.Clamp01(crouchTimer / maxCrouchChargeTime);
+
+        if (chargePercent <= 0.05f)
+            return;
+
+        float boostSpeed = Mathf.Lerp(minBoostSpeed, maxBoostSpeed, chargePercent);
+
+        Vector3 boostDirection = transform.forward;
+        boostDirection.y = 0f;
+        boostDirection.Normalize();
+
+        rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+        rb.AddForce(boostDirection * boostSpeed, ForceMode.VelocityChange);
+    }
+
+
 
     private bool CheckGround()
     {
