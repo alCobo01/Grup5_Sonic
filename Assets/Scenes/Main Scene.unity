@@ -254,13 +254,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirstPersonController
       objectReference: {fileID: 0}
+    - target: {fileID: 4459864850019384750, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864850190357393, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864850831721272, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864850888339818, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4459864850888339818, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4459864851310106424, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864851397454630, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4459864851397454630, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864851508666809, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864851551516604, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -384,6 +416,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247274074}
   m_CullTransparentMesh: 1
+--- !u!1 &281923329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5811083565931128104, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
+  m_PrefabInstance: {fileID: 5113914754927272659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &281923334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281923329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d533178b290d4e6a8c8ff2208f6c6023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContactDamage
+  damageAmount: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &298770740
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,7 +761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 473879504}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet Start Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1273,7 +1326,7 @@ GameObject:
   - component: {fileID: 1490534604}
   - component: {fileID: 1490534603}
   - component: {fileID: 1490534602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1680,7 +1733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d4d2b40114f409bac039cd26a0f50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBehaviour
-  maxHealth: 100
+  startingLives: 3
 --- !u!114 &1896872968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,6 +1973,18 @@ PrefabInstance:
       value: Cube
       objectReference: {fileID: 0}
     - target: {fileID: 9160619214741978281, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160619214741978281, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160619214741978281, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160619214741978281, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
       propertyPath: m_LocalPosition.x
       value: 245.43912
       objectReference: {fileID: 0}
@@ -1962,7 +2027,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5811083565931128104, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 281923334}
   m_SourcePrefab: {fileID: 100100000, guid: 36f124744e62a4f32a8d39d9a09ab878, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -16,13 +16,10 @@ public class PlayerPowerUpController : MonoBehaviour
         switch (powerUp.type)
         {
             case PowerUpType.Health:
-                _healthController.AddHealth(powerUp.amount);
+                _healthController.AddRings(powerUp.amount);
                 break;
             case PowerUpType.Shield:
                 StartCoroutine(ShieldRoutine(powerUp.amount, powerUp.duration));
-                break;
-            case PowerUpType.Speed:
-                StartCoroutine(SpeedBoostRoutine(powerUp.duration, powerUp.multiplier));
                 break;
             case PowerUpType.Invincibility:
                 StartCoroutine(InvincibilityRoutine(powerUp.duration));
@@ -38,12 +35,6 @@ public class PlayerPowerUpController : MonoBehaviour
         _healthController.AddShield(amount);
         yield return new WaitForSeconds(duration);
         _healthController.RemoveShield(amount);
-    }
-
-    private IEnumerator SpeedBoostRoutine(float duration, float multiplier)
-    {
-        // here goes speed modification
-        yield return new WaitForSeconds(duration);
     }
 
     private IEnumerator InvincibilityRoutine(float duration)

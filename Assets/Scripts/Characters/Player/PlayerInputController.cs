@@ -39,6 +39,6 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 
     public void OnPauseGame(InputAction.CallbackContext context)
     {
-        if (context.performed) OnPauseGameEvent.Invoke();
+        if (context.performed) OnPauseGameEvent?.Invoke();
     }
 }

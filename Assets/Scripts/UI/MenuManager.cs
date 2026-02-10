@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,8 +44,16 @@ public class MenuManager : MonoBehaviour
     //Handle menus state
     private void HandlePause()
     {
-        if (_isGamePaused) ShowMenu<PauseMenu>();
-        else CloseMenu<PauseMenu>();
+        if (!_isGamePaused)
+        {
+            ShowMenu<PauseMenu>();
+            _isGamePaused = true;
+        }
+        else
+        {
+            CloseMenu<PauseMenu>();
+            _isGamePaused = false;
+        }
     }
 
     private void HandleDeath() => ShowMenu<GameOverMenu>();
