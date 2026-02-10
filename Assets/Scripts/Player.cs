@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -10,18 +11,30 @@ public class Player : MonoBehaviour
     public float acceleration = 20f;
     public float deceleration = 25f;
 
+    [Header("Jump")]
+    public float jumpPower = 5f;
+    public KeyCode jumpKey = KeyCode.Space;
 
     [Header("Mouse Look")]
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 80f;
     public bool invertY = false;
 
-    [Header("References")]
-    public Camera playerCamera;
-
-    private Rigidbody rb;
+    [Header("Camera")]
+    public float fov = 60f;
+    public float fovIncreaseSpeed = 80f;
+    public float fovIncreaseThreshold = 2f;
     private float yaw;
     private float pitch;
+
+    [Header("References")]
+    public Camera playerCamera;
+    private Rigidbody rb;
+
+    [Header("Check Ground")]
+    public float groundCheckDistance = 0.9f;
+    public LayerMask groundLayer;
+    private bool isGrounded = false;
 
     private void Awake()
     {
@@ -29,6 +42,7 @@ public class Player : MonoBehaviour
 
         // Evita que el Rigidbody rote o vuele
         rb.freezeRotation = true;
+        playerCamera.fieldOfView = fov;
     }
 
     private void Start()
@@ -40,6 +54,13 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Look();
+        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        {
+            Jump();
+        }
+
+
+        isGrounded = CheckGround();
     }
 
     private void FixedUpdate()
@@ -59,6 +80,17 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
         playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+
+        float velocity = rb.linearVelocity.magnitude;
+        Debug.Log($"Current velocity: {velocity}");
+        if (velocity >= maxSpeed - fovIncreaseThreshold)
+        {
+            playerCamera.fieldOfView = fovIncreaseSpeed;
+        }
+        else
+        {
+            playerCamera.fieldOfView = fov;
+        }
     }
 
     private void Move()
@@ -85,4 +117,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Jump()
+    {
+        // Adds force to the player rigidbody to jump
+        if (isGrounded)
+        {
+            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+            isGrounded = false;
+        }
+    }
+
+    private bool CheckGround()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        //Debug.DrawRay(origin, Vector3.down * groundCheckDistance, Color.red);
+
+        return Physics.Raycast(
+            origin,
+            Vector3.down,
+            groundCheckDistance,
+            groundLayer
+        );
+    }
 }
