@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 139933040}
   - component: {fileID: 139933042}
   - component: {fileID: 139933041}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Reticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 271573705}
   - component: {fileID: 271573707}
   - component: {fileID: 271573706}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 1263464852}
   - component: {fileID: 1263464854}
   - component: {fileID: 1263464853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 1783688679}
   - component: {fileID: 1783688678}
   - component: {fileID: 1783688677}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,33 +751,19 @@ GameObject:
   - component: {fileID: 1939633601}
   - component: {fileID: 1939633600}
   - component: {fileID: 1939633599}
-  - component: {fileID: 1939633598}
-  m_Layer: 0
+  - component: {fileID: 1939633609}
+  - component: {fileID: 1939633608}
+  - component: {fileID: 1939633607}
+  - component: {fileID: 1939633606}
+  - component: {fileID: 1939633605}
+  - component: {fileID: 1939633604}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1939633598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939633597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84061ac0c3ff06940994df6e3080a775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  maxSpeed: 20
-  acceleration: 25
-  deceleration: 20
-  mouseSensitivity: 2
-  maxLookAngle: 50
-  invertY: 0
-  playerCamera: {fileID: 1263464852}
 --- !u!54 &1939633599
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -899,6 +885,96 @@ Transform:
   - {fileID: 1263464855}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1939633604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f92affb00120bb845a2a8117a6b9282d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementBehaviour
+  maxSpeed: 8
+  acceleration: 20
+  deceleration: 25
+--- !u!114 &1939633605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc978816f5f9fba4ab181e7e55eaaf1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLookBehaviour
+  mouseSensitivity: 2
+  maxLookAngle: 80
+  invertY: 0
+  playerCamera: {fileID: 1263464852}
+  fov: 60
+  fovBoost: 80
+  fovBoostThreshold: 2
+--- !u!114 &1939633606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8412946bb32fb3443b6b117df9269187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerJumpBehaviour
+  jumpPower: 5
+--- !u!114 &1939633607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67ebf0e7e2c79f84c863a6aa10f86ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGroundChecker
+  groundCheckDistance: 0.9
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &1939633608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fed0d7b3956cc544af1e081a3602d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCrouchBehaviour
+  maxCrouchChargeTime: 4
+  minBoostSpeed: 2
+  maxBoostSpeed: 40
+--- !u!114 &1939633609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939633597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f735bbb5ff8f64cb99f399e600c1a93d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
