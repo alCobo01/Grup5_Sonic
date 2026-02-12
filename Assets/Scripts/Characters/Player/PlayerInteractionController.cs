@@ -20,7 +20,12 @@ public class PlayerInteractionController : MonoBehaviour
         if (rayOrigin == null)
             if (Camera.main != null) rayOrigin = Camera.main.transform;
     }
-    
+
+    private void Update()
+    {
+        Debug.DrawRay(rayOrigin.position, rayOrigin.forward * interactionRange, Color.violetRed);
+    }
+
     private void HandleInteraction()
     {
         DetectInteractable();
@@ -32,7 +37,7 @@ public class PlayerInteractionController : MonoBehaviour
     {
         var ray = new Ray(rayOrigin.position, rayOrigin.forward);
 
-        if (Physics.Raycast(ray, out var hit, interactionRange, interactionLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionLayer))
             _currentInteractable = hit.collider.TryGetComponent(out IInteractable interactable) ? interactable : null;
     }
 }

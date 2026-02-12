@@ -3,19 +3,34 @@ using System;
 
 public class HealthBehaviour : MonoBehaviour
 {
-    [SerializeField] private int startingLives = 3;
+    [Header("Health values")]
+    [SerializeField] private int maxHealth;
+
+    //Events for other classes to subscribe
+    public event Action<int> OnHealthChange = delegate { };
+    public event Action OnDeath = delegate { };
 
     //Class properties
-    public int CurrentLives { get; private set; }
-    public bool IsDead => CurrentLives <= 0;
+    public int CurrentHealth { get; private set; }
+    public bool IsDead => CurrentHealth <= 0;
 
-    private void Awake()
+    private void Awake() => CurrentHealth = maxHealth;
+
+    private void Start() => OnHealthChange?.Invoke(CurrentHealth);
+
+    public void ModifyHealth(int amount)
     {
-        CurrentLives = startingLives;
+        if (IsDead) return;
+        CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, maxHealth);
+        OnHealthChange?.Invoke(CurrentHealth);
+        if (IsDead) OnDeath?.Invoke();
     }
 
-    public void LoseLife()
+    public void Kill()
     {
-        CurrentLives = Mathf.Max(0, CurrentLives - 1);
+        if (IsDead) return;
+        CurrentHealth = 0;
+        OnHealthChange?.Invoke(0);
+        OnDeath?.Invoke();
     }
 }

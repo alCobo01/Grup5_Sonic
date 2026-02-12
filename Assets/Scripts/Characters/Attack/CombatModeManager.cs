@@ -34,7 +34,7 @@ public class CombatModeManager : MonoBehaviour
     private void HandleAim(bool isAiming)
     {
         _animationBehaviour.SetAiming(isAiming);
-        
+
         switch (isAiming)
         {
             case true when rangeAttack != null:
