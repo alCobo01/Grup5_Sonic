@@ -10,6 +10,7 @@ public class MovingPlatform : MonoBehaviour
 
     [Header("Waypoints")]
     [SerializeField] private Transform[] waypoints;
+    private Vector3[] _waypointPositions;
 
     [Header("Movement")]
     [SerializeField] private float speed = 3f;
@@ -35,11 +36,17 @@ public class MovingPlatform : MonoBehaviour
             return;
         }
 
-        transform.position = waypoints[0].position;
+        _waypointPositions = new Vector3[waypoints.Length];
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            _waypointPositions[i] = waypoints[i].position;
+        }
+
+        transform.position = _waypointPositions[0];
         _previousPosition = transform.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isWaiting)
         {
@@ -53,7 +60,7 @@ public class MovingPlatform : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
-        Vector3 target = waypoints[GetNextIndex()].position;
+        Vector3 target = _waypointPositions[GetNextIndex()];
         Vector3 delta = target - transform.position;
         float stepSize = speed * Time.deltaTime;
 

@@ -14,7 +14,7 @@ public class Accelerator : MonoBehaviour, ILauncher
 
     public void Launch(Rigidbody rb)
     {
-        Vector3 direction = transform.forward;
+        Vector3 direction = -transform.right;
 
         float currentSpeed = Vector3.Dot(rb.linearVelocity, direction);
 
@@ -40,7 +40,7 @@ public class Accelerator : MonoBehaviour, ILauncher
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position, transform.forward * 2f);
+        Gizmos.DrawRay(transform.position, -transform.right * 2f);
 
         Gizmos.color = new Color(1f, 0.6f, 0f, 0.4f);
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);

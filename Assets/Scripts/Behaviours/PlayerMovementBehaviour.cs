@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovementBehaviour : MonoBehaviour
 {
     [Header("Acceleration")]
-    [SerializeField] private float maxSpeed = 8f;
+    [SerializeField] private float maxSpeed = 20f;
     [SerializeField] private float acceleration = 20f;
     [SerializeField] private float deceleration = 25f;
 
@@ -36,6 +36,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(_rb.linearVelocity.magnitude);
         if (_crouch != null && _crouch.IsCrouching) return;
 
         Vector3 wishDir = (transform.right * _moveInput.x
