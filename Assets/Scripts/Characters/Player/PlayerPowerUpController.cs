@@ -16,9 +16,6 @@ public class PlayerPowerUpController : MonoBehaviour
         switch (powerUp.type)
         {
             case PowerUpType.Health:
-                _healthController.AddLives(powerUp.amount);
-                break;
-            case PowerUpType.Ring:
                 _healthController.AddRings(powerUp.amount);
                 break;
             case PowerUpType.Shield:

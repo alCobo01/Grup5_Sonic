@@ -36,6 +36,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(_rb.linearVelocity.magnitude);
         if (_crouch != null && _crouch.IsCrouching) return;
 
         Vector3 wishDir = (transform.right * _moveInput.x
