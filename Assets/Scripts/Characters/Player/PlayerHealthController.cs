@@ -31,7 +31,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     public void AddRings(int amount)
     {
         if (_health.IsDead) return;
-        CurrentRings = Mathf.Max(0, CurrentRings + amount);
+        CurrentRings = CurrentRings + amount;
         OnRingsChanged?.Invoke(CurrentRings);
     }
 
@@ -39,6 +39,13 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     {
         CurrentRings = 0;
         OnRingsChanged?.Invoke(CurrentRings);
+    }
+
+    public void AddLives(int amount)
+    {
+        if (_health.IsDead) return;
+        _health.CurrentLives += amount;
+        OnLivesChanged?.Invoke(_health.CurrentLives);
     }
 
     public void TakeDamage(int damage)
@@ -72,6 +79,8 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
             if (_health.IsDead) OnDeath?.Invoke();
             else OnLifeLost?.Invoke();
         }
+        
+        Debug.Log($"Rings: {CurrentRings}, lives: {_health.CurrentLives}");
     }
 
     public void InstantKill()
