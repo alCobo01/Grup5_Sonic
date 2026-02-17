@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 279e68f9991dcd8439f9c250a266182a
+guid: 5a9f2f48e2a63cd4b865bab4ffff86a3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Pinchos|PinchosAction
-      takeName: Pinchos|PinchosAction
-      internalID: 3801060773867159653
+      name: Armature|ArmatureAction
+      takeName: Armature|ArmatureAction
+      internalID: 4781951162920444690
       firstFrame: 0
-      lastFrame: 92
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
