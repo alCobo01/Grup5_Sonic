@@ -125,19 +125,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 468181028}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 722700dcb7e6f974f84659a296033b54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 66.86
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 722700dcb7e6f974f84659a296033b54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 722700dcb7e6f974f84659a296033b54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 606.21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 722700dcb7e6f974f84659a296033b54, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2447,8 +2447,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 628269a7b5e61ce4282155dcb4cfed95, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 386450827}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 628269a7b5e61ce4282155dcb4cfed95, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 386450828}
   m_SourcePrefab: {fileID: 100100000, guid: 628269a7b5e61ce4282155dcb4cfed95, type: 3}
+--- !u!1 &386450826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 628269a7b5e61ce4282155dcb4cfed95, type: 3}
+  m_PrefabInstance: {fileID: 386450825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &386450827
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386450826}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.232996, z: 1}
+  m_Center: {x: 0, y: 0.616498, z: 0}
+--- !u!114 &386450828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386450826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35436e128778b164399d2d1f96eba5d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinZoneTrigger
+  playerTag: Player
 --- !u!1 &388018363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4459864851310106424, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
@@ -2957,6 +3002,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4e20a38b51da0444eb09bf3c65dd50a9, type: 3}
   m_PrefabInstance: {fileID: 467968539}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &468181026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 468181028}
+  - component: {fileID: 468181027}
+  - component: {fileID: 468181029}
+  m_Layer: 0
+  m_Name: EggmanBoss
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &468181027
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468181026}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4.122985, z: 1}
+  m_Center: {x: 0, y: -0.2236638, z: 0}
+--- !u!4 &468181028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468181026}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 54.87, y: 11.88, z: 607.5759}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 874699309}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &468181029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468181026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bac28c172218bb46a41924ff818598f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverZoneTrigger
+  playerTag: Player
 --- !u!1 &472925623
 GameObject:
   m_ObjectHideFlags: 0
@@ -5713,6 +5826,11 @@ Transform:
   - {fileID: 135973627}
   m_Father: {fileID: 1983000640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &874699309 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 722700dcb7e6f974f84659a296033b54, type: 3}
+  m_PrefabInstance: {fileID: 829302}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &888436681
 GameObject:
   m_ObjectHideFlags: 0
@@ -12980,6 +13098,6 @@ SceneRoots:
   - {fileID: 651646270}
   - {fileID: 1983000640}
   - {fileID: 386450825}
-  - {fileID: 829302}
   - {fileID: 742016306}
   - {fileID: 1674671273}
+  - {fileID: 468181028}
