@@ -1782,6 +1782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   checkPoints:
   - {fileID: 967105522}
+  - {fileID: 1647220048}
   playerPrefab: {fileID: 192935402}
 --- !u!4 &347191819
 Transform:
