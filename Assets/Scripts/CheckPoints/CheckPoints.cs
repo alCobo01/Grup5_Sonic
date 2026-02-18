@@ -2,17 +2,32 @@ using UnityEngine;
 
 public class CheckPoints : MonoBehaviour
 {
+    [SerializeField] private LayerMask playerLayer;
     private Animator _animator;
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+       
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Player"))
+        if (playerLayer.value != 0 && (playerLayer.value & (1 << collision.gameObject.layer)) == 0)
+        {
+            Debug.Log("Layer mismatch. Player layer: " + collision.gameObject.layer + " Mask: " + playerLayer.value);
+        }
+
+        if (collision.CompareTag("Player") || collision.gameObject.GetComponentInParent<PlayerMovementBehaviour>() != null)
         {
             _animator.SetTrigger("Used");
-            //GameManager.Instance.LastCheckPoint(gameObject);
+
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.LastCheckPoint(gameObject);
+            }
+            else
+            {
+                Debug.LogError("GameManager instance not found!");
+            }
         }
     }
 }
