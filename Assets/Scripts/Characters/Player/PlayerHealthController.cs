@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem.XR.Haptics;
 
 [RequireComponent(typeof(HealthBehaviour))]
-public class PlayerHealthController : MonoBehaviour, IDamageable
+public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 {
     public static event UnityAction OnDeath;
     public static event UnityAction<int> OnRingsChanged;
@@ -13,6 +13,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     
     public bool IsInvincible { get; set; }
     public int CurrentRings { get; private set; }
+    public int CurrentLives => _health != null ? _health.CurrentLives : 0;
 
     private int _currentShield;
     private HealthBehaviour _health;
@@ -20,7 +21,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     private void Awake()
     {
         _health = GetComponent<HealthBehaviour>();
-        CurrentRings = 20;
+        CurrentRings = 2;
     }
     
     // Modify shield methods
@@ -31,7 +32,8 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     public void AddRings(int amount)
     {
         if (_health.IsDead) return;
-        CurrentRings = CurrentRings + amount;
+        if (amount == 0) return;
+        CurrentRings = Mathf.Max(0, CurrentRings + amount);
         OnRingsChanged?.Invoke(CurrentRings);
     }
 
@@ -39,6 +41,16 @@ public class PlayerHealthController : MonoBehaviour, IDamageable
     {
         CurrentRings = 0;
         OnRingsChanged?.Invoke(CurrentRings);
+    }
+
+    public bool TrySpendRing()
+    {
+        if (_health.IsDead) return false;
+        if (CurrentRings < 1) return false;
+
+        CurrentRings -= 1;
+        OnRingsChanged?.Invoke(CurrentRings);
+        return true;
     }
 
     public void AddLives(int amount)
