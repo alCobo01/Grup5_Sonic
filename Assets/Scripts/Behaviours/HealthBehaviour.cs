@@ -1,12 +1,11 @@
 using UnityEngine;
-using System;
 
 public class HealthBehaviour : MonoBehaviour
 {
     [SerializeField] private int startingLives = 3;
 
     //Class properties
-    public int CurrentLives { get; private set; }
+    public int CurrentLives { get; set; }
     public bool IsDead => CurrentLives <= 0;
 
     private void Awake()
