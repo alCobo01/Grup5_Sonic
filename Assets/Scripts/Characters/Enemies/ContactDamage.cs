@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ContactDamage : MonoBehaviour
@@ -12,7 +11,8 @@ public class ContactDamage : MonoBehaviour
     private void TryDealDamage(GameObject target)
     {
         if (((1 << target.layer) & targetLayer) == 0) return;
-        if (target.TryGetComponent(out IDamageable damageable))
-            damageable.TakeDamage(damageAmount);
+        
+        var damageable = target.GetComponentInParent<IDamageable>();
+        damageable?.TakeDamage(damageAmount);
     }
 }
