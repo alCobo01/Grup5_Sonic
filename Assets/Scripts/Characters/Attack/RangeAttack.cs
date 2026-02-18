@@ -10,15 +10,19 @@ public class RangeAttack : MonoBehaviour, IAttack
     [SerializeField] private LayerMask targetLayer = ~0;
 
     private AnimationBehaviour _animationBehaviour;
+    private IRingWallet _ringWallet;
 
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
         if (firePoint == null) firePoint = transform;
+        _ringWallet = GetComponentInParent<IRingWallet>();
     }
 
     public void Attack()
     {
+        if (!_ringWallet.TrySpendRing()) return;
+        
         if (bulletPrefab != null && firePoint != null)
         {
             var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);

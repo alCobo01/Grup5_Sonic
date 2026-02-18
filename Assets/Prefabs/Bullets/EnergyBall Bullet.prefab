@@ -14,9 +14,8 @@ GameObject:
   - component: {fileID: 6374663298580680586}
   - component: {fileID: 4005243565622559650}
   - component: {fileID: 4439430538149080555}
-  - component: {fileID: 8883030189944638331}
   m_Layer: 0
-  m_Name: Energy Ball
+  m_Name: EnergyBall Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5009,21 +5008,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8883030189944638331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1277900891721883626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e912979808f66440f9976ba0f8b9b212, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageProjectile
-  damageAmount: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  lifeTime: 5
-  destroyOnHit: 1
