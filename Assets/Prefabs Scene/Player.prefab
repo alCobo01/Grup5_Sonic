@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 674504886120030431}
   - component: {fileID: 5816623825584838160}
   - component: {fileID: 6858343062130199631}
+  - component: {fileID: -6669595381697450924}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -697,3 +698,15 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &-6669595381697450924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994571563331843826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb7e617eac0142fc818cc2cc198b257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPowerUpController

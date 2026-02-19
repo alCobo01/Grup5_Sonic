@@ -4,17 +4,24 @@ public class WinZoneTrigger : MonoBehaviour
 {
     [Tooltip("Tag del jugador para detectar la colisión")]
     [SerializeField] private string playerTag = "Player";
-
+    private Animator _animator;
     private bool _hasTriggered = false;
-
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (_hasTriggered) return;
-
         if (other.CompareTag(playerTag))
         {
-            _hasTriggered = true;
-            MenuManager.Instance.ShowMenu<WinMenu>();
+            _animator.SetTrigger("Used");
+            Invoke(nameof(ShowWinMenu), 2.5f); 
         }
+    }
+    private void ShowWinMenu()
+    {
+        _hasTriggered = true;
+        MenuManager.Instance.ShowMenu<WinMenu>();
     }
 }
