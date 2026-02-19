@@ -1,6 +1,11 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : BaseMenu
 {
-    public void Play() => SceneManager.LoadScene("Main Scene");
+    public void Play()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Scene");
+    }
 }
