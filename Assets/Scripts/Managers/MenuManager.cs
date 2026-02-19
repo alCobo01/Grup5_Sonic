@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
     private void OnDisable()
     {
         PlayerHealthController.OnDeath -= HandleDeath;
-        PlayerInputController.OnPauseGameEvent += HandlePause;
+        PlayerInputController.OnPauseGameEvent -= HandlePause;
     } 
 
     // Generic show and close menu methods
