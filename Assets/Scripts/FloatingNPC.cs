@@ -32,7 +32,7 @@ public class FloatingNPC : MonoBehaviour
         initialY = transform.position.y;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (target == null) return;
 
@@ -58,19 +58,17 @@ public class FloatingNPC : MonoBehaviour
 
         if (distanceToPlayer > stopDistance)
         {
-            // Posición objetivo: donde está el player pero con la altura flotante
             Vector3 targetPos = new Vector3(
                 target.position.x,
                 floatHeight + Mathf.Sin(Time.time * floatFrequency) * floatAmplitude,
                 target.position.z
             );
 
-            // Mover suavemente hacia el player
-            transform.position = Vector3.SmoothDamp(
+            // Lerp suave, sin tirones
+            transform.position = Vector3.Lerp(
                 transform.position,
                 targetPos,
-                ref velocity,
-                smoothTime / followSpeed
+                followSpeed * Time.deltaTime
             );
         }
     }
