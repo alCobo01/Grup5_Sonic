@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationBehaviour))]
 public class CombatModeManager : MonoBehaviour
 {
+    private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
+    
     private PlayerInputController _inputController;
     private PlayerAttackController _attackController;
     private AnimationBehaviour _animationBehaviour;
@@ -33,7 +35,7 @@ public class CombatModeManager : MonoBehaviour
 
     private void HandleAim(bool isAiming)
     {
-        _animationBehaviour.SetAiming(isAiming);
+        _animationBehaviour.SetBool(IsAimingHash, isAiming);
         
         switch (isAiming)
         {

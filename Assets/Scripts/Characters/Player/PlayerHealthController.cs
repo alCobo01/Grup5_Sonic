@@ -18,11 +18,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     private int _currentShield;
     private HealthBehaviour _health;
 
-    private void Awake()
-    {
-        _health = GetComponent<HealthBehaviour>();
-        CurrentRings = 2;
-    }
+    private void Awake() => _health = GetComponent<HealthBehaviour>();
     
     // Modify shield methods
     public void AddShield(int amount) => _currentShield += amount;
@@ -91,8 +87,6 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
             if (_health.IsDead) OnDeath?.Invoke();
             else OnLifeLost?.Invoke();
         }
-        
-        Debug.Log($"Rings: {CurrentRings}, lives: {_health.CurrentLives}");
     }
 
     public void InstantKill()
