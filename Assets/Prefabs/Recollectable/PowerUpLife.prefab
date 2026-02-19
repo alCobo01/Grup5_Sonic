@@ -50,11 +50,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6733177361254619370, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -5568371526223589888, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -5076484507258936684, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Lightmapping
@@ -66,31 +66,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -516098083770646512, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 760539046466425920, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Name
-      value: PowerUpLife 1
+      value: PowerUpLife
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4238715221626264924, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8082567462245465395, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8513859187771203891, guid: 5b7cc491db1e1ca458e3233f61ea0ea1, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpPickup
   powerUpData: {fileID: 11400000, guid: f7ead9807f79141138777b0fb36dfacd, type: 2}
   collectMode: 1
-  breakCollector: {fileID: 0}
+  breakCollector: {fileID: -6669595381697450924, guid: c8ef26a7c0df64e11b3cf79ee189723e, type: 3}
   brokenPrefab: {fileID: 655848705637457203, guid: 5c46db380b7ef464c91200dc039b7da8, type: 3}
 --- !u!65 &4231746217627333365
 BoxCollider:
