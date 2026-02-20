@@ -21,7 +21,6 @@ public class PlayerJumpBehaviour : MonoBehaviour
         _input = GetComponent<PlayerInputController>();
         _animationBehaviour = GetComponent<AnimationBehaviour>();
         _groundChecker = GetComponent<PlayerGroundChecker>();
-
         _input.OnJumpEvent += HandleJump;
     }
 

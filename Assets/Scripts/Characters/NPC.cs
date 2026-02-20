@@ -9,7 +9,6 @@ public class NPC : MonoBehaviour, IInteractable
     [SerializeField] private NPCDialogue dialogueData;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TMP_Text dialogueText, nameText;
-    [SerializeField] private Image portraitImage;
 
     private int _dialogueIndex;
     private bool _isTyping, _isDialogueActive;
@@ -28,7 +27,6 @@ public class NPC : MonoBehaviour, IInteractable
         _dialogueIndex = 0;
 
         nameText.SetText(dialogueData.npcName);
-        portraitImage.sprite = dialogueData.npcPortrait;
 
         dialoguePanel.SetActive(true);
         StartCoroutine(TypeLine());
