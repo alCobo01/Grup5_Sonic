@@ -13,7 +13,8 @@ public class PlayerLookBehaviour : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private float fov = 60f;
     [SerializeField] private float fovBoost = 80f;
-    [SerializeField] private float fovBoostThreshold = 2f;
+    [SerializeField] [Range(0f, 1f)] private float fovBoostThresholdPercent = 0.75f;
+    [SerializeField] private float fovTransitionSpeed = 5f;
 
     private Rigidbody _rb;
     private PlayerInputController _input;
@@ -63,8 +64,10 @@ public class PlayerLookBehaviour : MonoBehaviour
         float speed = _rb.linearVelocity.magnitude;
         float maxSpeed = _movement != null ? _movement.MaxSpeed : 8f;
 
-        playerCamera.fieldOfView = speed >= maxSpeed - fovBoostThreshold
+        float targetFov = speed >= maxSpeed * fovBoostThresholdPercent
             ? fovBoost
             : fov;
+
+        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFov, Time.deltaTime * fovTransitionSpeed);
     }
 }
