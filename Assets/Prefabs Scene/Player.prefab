@@ -559,7 +559,8 @@ MonoBehaviour:
   playerCamera: {fileID: 3257681246940794972}
   fov: 60
   fovBoost: 80
-  fovBoostThreshold: 2
+  fovBoostThresholdPercent: 0.75
+  fovTransitionSpeed: 5
 --- !u!114 &7587118093985072277
 MonoBehaviour:
   m_ObjectHideFlags: 0
