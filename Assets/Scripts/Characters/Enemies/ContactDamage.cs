@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationBehaviour))]
 public class ContactDamage : MonoBehaviour
 {
-    private static readonly int AttackHash = Animator.StringToHash("Attack");
+  
     
     [SerializeField] private int damageAmount = 1;
     [SerializeField] private LayerMask targetLayer;
@@ -22,6 +22,6 @@ public class ContactDamage : MonoBehaviour
         var damageable = target.GetComponentInParent<IDamageable>();
         damageable?.TakeDamage(damageAmount);
         
-        _animationBehaviour.Trigger(AttackHash);
+        _animationBehaviour.TriggerMeleeAttack();
     }
 }

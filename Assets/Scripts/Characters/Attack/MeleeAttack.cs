@@ -4,7 +4,6 @@ using System.Collections.Generic;
 //[RequireComponent(typeof(AnimationBehaviour))]
 public class MeleeAttack : MonoBehaviour, IAttack
 {
-    private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
     
     [SerializeField] private int damageAmount = 1;
     [SerializeField] private float attackRange = 1.5f;
@@ -21,7 +20,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     public void Attack()
     {
-        _animationBehaviour.Trigger(MeleeAttackHash);
+        _animationBehaviour.TriggerMeleeAttack();
         DealDamage();
     }
 

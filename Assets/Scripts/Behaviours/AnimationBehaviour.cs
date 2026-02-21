@@ -4,11 +4,18 @@
 public class AnimationBehaviour : MonoBehaviour
 {
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int AnimSpeedHash = Animator.StringToHash("AnimSpeed");
+    private static readonly int JumpHash = Animator.StringToHash("Jump");
+    private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
+    private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
+    private static readonly int MeleeAttackHash = Animator.StringToHash("MeeleAttack");
 
-    public Animator Animator { get; private set; }
+    [SerializeField] private Animator _animator;
+    [SerializeField] private float animSpeedMultiplier = 0.1f;
     private Rigidbody _rigidbody;
     private PlayerGroundChecker _groundChecker;
     private PlayerMovementBehaviour _movement;
+ 
 
     private void Awake()
     {
@@ -49,12 +56,14 @@ public class AnimationBehaviour : MonoBehaviour
             _animator.SetBool(IsGroundedHash, _groundChecker.IsGrounded);
         }
     }
+    public void Trigger(int hash) => _animator.SetTrigger(hash);
+
+    public void SetBool(int hash, bool state) => _animator.SetBool(hash, state);
 
     public void TriggerMeleeAttack()
     {
         if (_animator != null) _animator.SetTrigger(MeleeAttackHash);
     }
-
 
     public void SetAiming(bool isAiming)
     {

@@ -32,7 +32,7 @@ public class CombatModeManager : MonoBehaviour
 
     private void HandleAim(bool isAiming)
     {
-        _animationBehaviour.SetBool(IsAimingHash, isAiming);
+       // _animationBehaviour.SetBool(IsAimingHash, isAiming);
         
         switch (isAiming)
         {
