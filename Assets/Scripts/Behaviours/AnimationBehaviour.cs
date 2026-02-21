@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
 public class AnimationBehaviour : MonoBehaviour
 {
@@ -13,17 +12,22 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
 
-    private Animator _animator;
+    [SerializeField] private Animator _animator;
     private Rigidbody _rigidbody;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        if (_animator == null)
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
         _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
+        if (_animator == null) return;
+
         Vector3 velocity = _rigidbody.linearVelocity;
         Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
         float currentSpeed = horizontalVelocity.magnitude;
@@ -32,36 +36,36 @@ public class AnimationBehaviour : MonoBehaviour
 
     public void PlayDance()
     {
-        _animator.SetTrigger(DanceHash);
+        if (_animator != null) _animator.SetTrigger(DanceHash);
     }
 
     public void TriggerMeleeAttack()
     {
-        _animator.SetTrigger(MeleeAttackHash);
+        if (_animator != null) _animator.SetTrigger(MeleeAttackHash);
     }
 
     public void TriggerRangeAttack()
     {
-        _animator.SetTrigger(RangeAttackHash);
+        if (_animator != null) _animator.SetTrigger(RangeAttackHash);
     }
 
     public void SetAiming(bool isAiming)
     {
-        _animator.SetBool(IsAimingHash, isAiming);
+        if (_animator != null) _animator.SetBool(IsAimingHash, isAiming);
     }
 
     public void TriggerJump()
     {
-        _animator.SetTrigger(JumpHash);
+        if (_animator != null) _animator.SetTrigger(JumpHash);
     }
 
     public void SetGrounded(bool isGrounded)
     {
-        _animator.SetBool(IsGroundedHash, isGrounded);
+        if (_animator != null) _animator.SetBool(IsGroundedHash, isGrounded);
     }
 
     public void SetCrouch(bool isCrouching)
     {
-        _animator.SetBool(IsCrouchedHash, isCrouching);
+        if (_animator != null) _animator.SetBool(IsCrouchedHash, isCrouching);
     }
 } 

@@ -2,12 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 [RequireComponent(typeof(PlayerAttackController))]
-[RequireComponent(typeof(AnimationBehaviour))]
+
 public class CombatModeManager : MonoBehaviour
 {
     private PlayerInputController _inputController;
     private PlayerAttackController _attackController;
-    private AnimationBehaviour _animationBehaviour;
+    //private AnimationBehaviour _animationBehaviour;
     
     // Dependencies on specific strategies
     [SerializeField] private MeleeAttack meleeAttack;
@@ -17,7 +17,7 @@ public class CombatModeManager : MonoBehaviour
     {
         _inputController = GetComponent<PlayerInputController>();
         _attackController = GetComponent<PlayerAttackController>();
-        _animationBehaviour = GetComponent<AnimationBehaviour>();
+       // _animationBehaviour = GetComponent<AnimationBehaviour>();
         
         if (meleeAttack == null) meleeAttack = GetComponent<MeleeAttack>();
         if (rangeAttack == null) rangeAttack = GetComponent<RangeAttack>();
@@ -33,7 +33,7 @@ public class CombatModeManager : MonoBehaviour
 
     private void HandleAim(bool isAiming)
     {
-        _animationBehaviour.SetAiming(isAiming);
+        //_animationBehaviour.SetAiming(isAiming);
         
         switch (isAiming)
         {

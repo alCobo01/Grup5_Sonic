@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AnimationBehaviour))]
+//[RequireComponent(typeof(AnimationBehaviour))]
 public class RangeAttack : MonoBehaviour, IAttack
 {
     [SerializeField] private GameObject bulletPrefab;
