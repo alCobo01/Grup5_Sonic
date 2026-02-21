@@ -35,6 +35,5 @@ public class RangeAttack : MonoBehaviour, IAttack
                 projectile.Configure(damageAmount, targetLayer, gameObject);
         }
         
-        _animationBehaviour.TriggerRangeAttack();
     }
 }
