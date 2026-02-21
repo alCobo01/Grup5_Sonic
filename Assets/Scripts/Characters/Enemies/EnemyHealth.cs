@@ -1,12 +1,17 @@
 using UnityEngine;
 
 [RequireComponent(typeof(HealthBehaviour))]
+[RequireComponent(typeof(AnimationBehaviour))]
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
+    private static readonly int DieHash = Animator.StringToHash("Die");
+    
+    private AnimationBehaviour _animationBehaviour;
     private HealthBehaviour _health;
 
     private void Awake()
     {
+        _animationBehaviour = GetComponent<AnimationBehaviour>();
         _health = GetComponent<HealthBehaviour>();
     }
 
@@ -29,7 +34,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     
     private void Die()
     {
-        //animations or vfx
-        Destroy(gameObject);
+        _animationBehaviour.Trigger(DieHash);
     }
+
+    public void Destroy() => Destroy(gameObject);
+    
 }
