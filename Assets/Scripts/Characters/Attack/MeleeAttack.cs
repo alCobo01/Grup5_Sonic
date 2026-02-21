@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(AnimationBehaviour))]
+//[RequireComponent(typeof(AnimationBehaviour))]
 public class MeleeAttack : MonoBehaviour, IAttack
 {
     private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");

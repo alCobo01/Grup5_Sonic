@@ -2,14 +2,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 [RequireComponent(typeof(PlayerAttackController))]
-[RequireComponent(typeof(AnimationBehaviour))]
+
 public class CombatModeManager : MonoBehaviour
 {
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
     
     private PlayerInputController _inputController;
     private PlayerAttackController _attackController;
-    private AnimationBehaviour _animationBehaviour;
+    //private AnimationBehaviour _animationBehaviour;
     
     private MeleeAttack _meleeAttack;
     private RangeAttack _rangeAttack;
@@ -18,7 +18,7 @@ public class CombatModeManager : MonoBehaviour
     {
         _inputController = GetComponent<PlayerInputController>();
         _attackController = GetComponent<PlayerAttackController>();
-        _animationBehaviour = GetComponent<AnimationBehaviour>();
+       // _animationBehaviour = GetComponent<AnimationBehaviour>();
         
         _meleeAttack = GetComponent<MeleeAttack>();
         _rangeAttack = GetComponent<RangeAttack>();

@@ -33,7 +33,14 @@ public class Trampoline : MonoBehaviour, ILauncher
             return;
 
         if (other.TryGetComponent(out Rigidbody rb))
+        {
             Launch(rb);
+            
+            if (other.TryGetComponent(out AnimationBehaviour animation))
+            {
+                animation.TriggerJump();
+            }
+        }
     }
 
     private Vector3 GetLaunchDirection()

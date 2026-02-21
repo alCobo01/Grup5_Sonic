@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AnimationBehaviour))]
+//[RequireComponent(typeof(AnimationBehaviour))]
 public class RangeAttack : MonoBehaviour, IAttack
 {
     private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
