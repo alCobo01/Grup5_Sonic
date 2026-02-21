@@ -11,12 +11,14 @@ public class PlayerJumpBehaviour : MonoBehaviour
     private Rigidbody _rb;
     private PlayerInputController _input;
     private PlayerGroundChecker _groundChecker;
+    private AnimationBehaviour _animation;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _input = GetComponent<PlayerInputController>();
         _groundChecker = GetComponent<PlayerGroundChecker>();
+        _animation = GetComponent<AnimationBehaviour>();
 
         _input.OnJumpEvent += HandleJump;
     }
@@ -31,5 +33,6 @@ public class PlayerJumpBehaviour : MonoBehaviour
         if (!_groundChecker.IsGrounded) return;
 
         _rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        if (_animation) _animation.TriggerJump();
     }
 }

@@ -4,6 +4,7 @@
 public class AnimationBehaviour : MonoBehaviour
 {
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int AnimSpeedHash = Animator.StringToHash("AnimSpeed");
     private static readonly int DanceHash = Animator.StringToHash("Dance");
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
@@ -13,7 +14,10 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private float animSpeedMultiplier = 0.1f;
     private Rigidbody _rigidbody;
+    private PlayerGroundChecker _groundChecker;
+    private PlayerMovementBehaviour _movement;
 
     private void Awake()
     {
@@ -22,16 +26,37 @@ public class AnimationBehaviour : MonoBehaviour
             _animator = GetComponentInChildren<Animator>();
         }
         _rigidbody = GetComponent<Rigidbody>();
+        _groundChecker = GetComponent<PlayerGroundChecker>();
+        _movement = GetComponent<PlayerMovementBehaviour>();
     }
 
     private void Update()
     {
         if (_animator == null) return;
 
+        // Update Speed
         Vector3 velocity = _rigidbody.linearVelocity;
         Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
         float currentSpeed = horizontalVelocity.magnitude;
         _animator.SetFloat(SpeedHash, currentSpeed, 0.1f, Time.deltaTime);
+
+        // Update Animation Playback Speed based on movement
+        float playbackSpeed = 1f;
+        if (_movement != null && currentSpeed > _movement.MaxSpeed * 0.75f)
+        {
+            playbackSpeed = 2f;
+        }
+        else
+        {
+            playbackSpeed = Mathf.Max(1f, currentSpeed * animSpeedMultiplier);
+        }
+        _animator.SetFloat(AnimSpeedHash, playbackSpeed);
+
+        // Update Grounded state
+        if (_groundChecker != null)
+        {
+            _animator.SetBool(IsGroundedHash, _groundChecker.IsGrounded);
+        }
     }
 
     public void PlayDance()
