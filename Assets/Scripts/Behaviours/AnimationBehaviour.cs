@@ -5,12 +5,9 @@ public class AnimationBehaviour : MonoBehaviour
 {
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
     private static readonly int AnimSpeedHash = Animator.StringToHash("AnimSpeed");
-    private static readonly int DanceHash = Animator.StringToHash("Dance");
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
-    private static readonly int IsCrouchedHash = Animator.StringToHash("IsCrouched");
     private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
-    private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
 
     [SerializeField] private Animator _animator;
@@ -40,7 +37,7 @@ public class AnimationBehaviour : MonoBehaviour
         float currentSpeed = horizontalVelocity.magnitude;
         _animator.SetFloat(SpeedHash, currentSpeed, 0.1f, Time.deltaTime);
 
-        // Update Animation Playback Speed based on movement
+        // Update Run  Animation Speed based on movement
         float playbackSpeed = 1f;
         if (_movement != null && currentSpeed > _movement.MaxSpeed * 0.75f)
         {
@@ -59,20 +56,11 @@ public class AnimationBehaviour : MonoBehaviour
         }
     }
 
-    public void PlayDance()
-    {
-        if (_animator != null) _animator.SetTrigger(DanceHash);
-    }
-
     public void TriggerMeleeAttack()
     {
         if (_animator != null) _animator.SetTrigger(MeleeAttackHash);
     }
 
-    public void TriggerRangeAttack()
-    {
-        if (_animator != null) _animator.SetTrigger(RangeAttackHash);
-    }
 
     public void SetAiming(bool isAiming)
     {
@@ -87,10 +75,5 @@ public class AnimationBehaviour : MonoBehaviour
     public void SetGrounded(bool isGrounded)
     {
         if (_animator != null) _animator.SetBool(IsGroundedHash, isGrounded);
-    }
-
-    public void SetCrouch(bool isCrouching)
-    {
-        if (_animator != null) _animator.SetBool(IsCrouchedHash, isCrouching);
     }
 } 
