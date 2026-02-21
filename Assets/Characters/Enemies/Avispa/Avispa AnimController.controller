@@ -54,7 +54,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2953925799324257100, guid: 9641966043ff741a8b8655bb4e3c9791, type: 3}
+  m_Motion: {fileID: 0}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -133,7 +133,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2674958278859614444, guid: 9641966043ff741a8b8655bb4e3c9791, type: 3}
+  m_Motion: {fileID: -1713325850127434092, guid: 34506246563c95e4dbde12af455e6d77, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -195,7 +195,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Cangrejo AnimController
+  m_Name: Avispa AnimController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Chase
@@ -280,7 +280,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 64d7a24dd768547f088609ba61cbab09, type: 2}
+  m_Motion: {fileID: -4574417121280339507, guid: 34506246563c95e4dbde12af455e6d77, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -353,7 +353,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4781951162920444690, guid: 9641966043ff741a8b8655bb4e3c9791, type: 3}
+  m_Motion: {fileID: -8945691123924629249, guid: 34506246563c95e4dbde12af455e6d77, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
