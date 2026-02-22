@@ -72,12 +72,32 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         BaseMenu.RestartCheckPoint += SetStartPoint;
-        PlayerHealthController.ReloadPlayer += LoadPlayerOnCheckpoint;
+        PlayerHealthController.ReloadPlayer += HandleReloadPlayer;
     }
 
     private void OnDisable()
     {
-        PlayerHealthController.ReloadPlayer -= LoadPlayerOnCheckpoint;
+        PlayerHealthController.ReloadPlayer -= HandleReloadPlayer;
         BaseMenu.RestartCheckPoint -= SetStartPoint;
+    }
+
+    private void HandleReloadPlayer()
+    {
+        StartCoroutine(ReloadSequence());
+    }
+
+    private System.Collections.IEnumerator ReloadSequence()
+    {
+        if (ScreenFader.Instance != null)
+        {
+            yield return ScreenFader.Instance.FadeOut();
+        }
+
+        LoadPlayerOnCheckpoint();
+
+        if (ScreenFader.Instance != null)
+        {
+            yield return ScreenFader.Instance.FadeIn();
+        }
     }
 }
