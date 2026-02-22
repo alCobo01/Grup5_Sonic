@@ -4,7 +4,7 @@ using System.Collections;
 public class ScreenFader : MonoBehaviour
 {
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private float fadeDuration = 0.5f;
+    [SerializeField] private float fadeDuration = 1f;
 
     public static ScreenFader Instance;
 
