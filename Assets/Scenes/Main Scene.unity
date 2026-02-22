@@ -3149,6 +3149,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 279e68f9991dcd8439f9c250a266182a, type: 3}
   m_PrefabInstance: {fileID: 2030306203}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &269812334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5898359289079938862, guid: 51bd05dc926cc4da48792433dfe3870a, type: 3}
+  m_PrefabInstance: {fileID: 1370933659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &269812335 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1824255048514710305, guid: 51bd05dc926cc4da48792433dfe3870a, type: 3}
+  m_PrefabInstance: {fileID: 1370933659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &270678287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5927,7 +5937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49eeff3d439d042b8b725d3f906946a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinMenu
-  statsUI: {fileID: 0}
+  statsUI: {fileID: 269812334}
 --- !u!1001 &475256399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7296,6 +7306,7 @@ Transform:
   m_Children:
   - {fileID: 1643770578}
   - {fileID: 1721792801}
+  - {fileID: 269812335}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &561032551
@@ -14721,7 +14732,7 @@ PrefabInstance:
     - target: {fileID: 2155206459306591239, guid: d61c39f16e8ecfb4886e952f0ef30b05, type: 3}
       propertyPath: statsUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 269812334}
     - target: {fileID: 3644133482350274812, guid: d61c39f16e8ecfb4886e952f0ef30b05, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -18056,7 +18067,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 557199777}
     m_Modifications:
     - target: {fileID: 1019741315138666656, guid: 51bd05dc926cc4da48792433dfe3870a, type: 3}
       propertyPath: m_Pivot.x
@@ -29575,7 +29586,6 @@ SceneRoots:
   - {fileID: 651646270}
   - {fileID: 1983000640}
   - {fileID: 829302}
-  - {fileID: 1370933659}
   - {fileID: 1198597676}
   - {fileID: 4961088685965622199}
   - {fileID: 97687738}

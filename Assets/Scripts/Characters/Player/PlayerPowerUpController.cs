@@ -8,9 +8,19 @@ public class PlayerPowerUpController : MonoBehaviour
 
     private void Awake()
     {
-        _healthController = GetComponent<PlayerHealthController>();
-    }
+        // _healthController = GetComponent<PlayerHealthController>();
+        // if (_healthController != null) return;
+        //
+        // _healthController = GetComponentInParent<PlayerHealthController>();
+        // if (_healthController != null) return;
 
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null && player.TryGetComponent(out PlayerHealthController healthController))
+        {
+            _healthController = healthController;
+        }
+    } 
+    
     public void ActivatePowerUp(PowerUp powerUp)
     {
         switch (powerUp.type)

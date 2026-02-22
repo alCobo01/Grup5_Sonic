@@ -38,14 +38,18 @@ public class AnimationBehaviour : MonoBehaviour
         animator.SetFloat(SpeedHash, currentSpeed, 0.1f, Time.deltaTime);
 
         // Update Run  Animation Speed based on movement
-        var playbackSpeed = 1f;
-        playbackSpeed = currentSpeed > _movement.MaxSpeed * 0.75f ? 2f : Mathf.Max(1f, currentSpeed * animSpeedMultiplier);
-        animator.SetFloat(AnimSpeedHash, playbackSpeed);
-
+        if (_movement != null)
+        {
+            var playbackSpeed = 1f;
+            playbackSpeed = currentSpeed > _movement.MaxSpeed * 0.75f ? 2f : Mathf.Max(1f, currentSpeed * animSpeedMultiplier);
+            animator.SetFloat(AnimSpeedHash, playbackSpeed);
+        }
+        
         // Update Grounded state
-        animator.SetBool(IsGroundedHash, _groundChecker.IsGrounded);
+        if (_groundChecker != null) animator.SetBool(IsGroundedHash, _groundChecker.IsGrounded);
         
     }
+    
     public void Trigger(int hash) => animator.SetTrigger(hash);
 
     public void SetBool(int hash, bool state) => animator.SetBool(hash, state);
