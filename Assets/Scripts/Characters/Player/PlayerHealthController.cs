@@ -18,12 +18,15 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     private int _currentShield;
     private HealthBehaviour _health;
 
-    private void Awake()
+    private void Awake() => _health = GetComponent<HealthBehaviour>();
+
+    private void Start()
     {
-        _health = GetComponent<HealthBehaviour>();
-        CurrentRings = 2;
+        //Update stats for not starting on 0 on UI
+        OnRingsChanged?.Invoke(CurrentRings);
+        OnLivesChanged?.Invoke(CurrentLives);
     }
-    
+
     // Modify shield methods
     public void AddShield(int amount) => _currentShield += amount;
     public void RemoveShield(int amount) => _currentShield = Mathf.Max(0, _currentShield - amount);
@@ -34,12 +37,6 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         if (_health.IsDead) return;
         if (amount == 0) return;
         CurrentRings = Mathf.Max(0, CurrentRings + amount);
-        OnRingsChanged?.Invoke(CurrentRings);
-    }
-
-    public void ResetRings()
-    {
-        CurrentRings = 0;
         OnRingsChanged?.Invoke(CurrentRings);
     }
 
@@ -91,8 +88,6 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
             if (_health.IsDead) OnDeath?.Invoke();
             else OnLifeLost?.Invoke();
         }
-        
-        Debug.Log($"Rings: {CurrentRings}, lives: {_health.CurrentLives}");
     }
 
     public void InstantKill()

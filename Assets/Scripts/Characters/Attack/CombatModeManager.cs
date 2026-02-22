@@ -2,46 +2,45 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputController))]
 [RequireComponent(typeof(PlayerAttackController))]
-[RequireComponent(typeof(AnimationBehaviour))]
+
 public class CombatModeManager : MonoBehaviour
 {
+    private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
+    
     private PlayerInputController _inputController;
     private PlayerAttackController _attackController;
-    private AnimationBehaviour _animationBehaviour;
+    //private AnimationBehaviour _animationBehaviour;
     
-    // Dependencies on specific strategies
-    [SerializeField] private MeleeAttack meleeAttack;
-    [SerializeField] private RangeAttack rangeAttack;
+    private MeleeAttack _meleeAttack;
+    private RangeAttack _rangeAttack;
 
     private void Awake()
     {
         _inputController = GetComponent<PlayerInputController>();
         _attackController = GetComponent<PlayerAttackController>();
-        _animationBehaviour = GetComponent<AnimationBehaviour>();
+       // _animationBehaviour = GetComponent<AnimationBehaviour>();
         
-        if (meleeAttack == null) meleeAttack = GetComponent<MeleeAttack>();
-        if (rangeAttack == null) rangeAttack = GetComponent<RangeAttack>();
+        _meleeAttack = GetComponent<MeleeAttack>();
+        _rangeAttack = GetComponent<RangeAttack>();
     }
 
     private void OnEnable()
     {
         _inputController.OnAimEvent += HandleAim;
-        
-        if (meleeAttack != null)
-            _attackController.SetAttackStrategy(meleeAttack);
+        _attackController.SetAttackStrategy(_meleeAttack);
     }
 
     private void HandleAim(bool isAiming)
     {
-        _animationBehaviour.SetAiming(isAiming);
+       // _animationBehaviour.SetBool(IsAimingHash, isAiming);
         
         switch (isAiming)
         {
-            case true when rangeAttack != null:
-                _attackController.SetAttackStrategy(rangeAttack);
+            case true:
+                _attackController.SetAttackStrategy(_rangeAttack);
                 break;
-            case false when meleeAttack != null:
-                _attackController.SetAttackStrategy(meleeAttack);
+            case false:
+                _attackController.SetAttackStrategy(_meleeAttack);
                 break;
         }
     }

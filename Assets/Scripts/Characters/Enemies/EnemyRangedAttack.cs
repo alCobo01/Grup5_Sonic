@@ -10,10 +10,11 @@ public class EnemyRangedAttack : MonoBehaviour
     [SerializeField] private LayerMask targetLayer = ~0;
     [SerializeField] private float attackRange = 10f;
     [SerializeField] private float attackCooldown = 1.25f;
-    [SerializeField] private Transform target;
+    [SerializeField] private string tagTarget = "Player";
     
     private float _attackRangeSqr;
     private WaitForSeconds _cooldownWait;
+    private Transform _target;
 
     private void Awake()
     {
@@ -22,8 +23,16 @@ public class EnemyRangedAttack : MonoBehaviour
         _cooldownWait = new WaitForSeconds(attackCooldown);
     }
 
-    private void OnEnable() => StartCoroutine(AttackLoop());
+    private void Start() => _target = GameObject.FindGameObjectWithTag(tagTarget).transform;
+    
+    private void OnEnable() => StartCoroutine(WaitForInitialize());
 
+    private IEnumerator WaitForInitialize()
+    {
+        yield return new WaitForSeconds(2);
+        StartCoroutine(AttackLoop());
+    }
+    
     private IEnumerator AttackLoop()
     {
         while (enabled)
@@ -38,11 +47,11 @@ public class EnemyRangedAttack : MonoBehaviour
     }
 
     private bool IsInRange() => 
-        (target.position - firePoint.position).sqrMagnitude <= _attackRangeSqr;
+        (_target.position - firePoint.position).sqrMagnitude <= _attackRangeSqr;
 
     private void Shoot()
     {
-        var direction = (target.position - firePoint.position).normalized;
+        var direction = (_target.position - firePoint.position).normalized;
         var proj = Instantiate(projectilePrefab, firePoint.position, 
             Quaternion.LookRotation(direction));
 

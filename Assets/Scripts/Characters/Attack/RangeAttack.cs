@@ -1,8 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AnimationBehaviour))]
+//[RequireComponent(typeof(AnimationBehaviour))]
 public class RangeAttack : MonoBehaviour, IAttack
 {
+    private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
+    
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float bulletSpeed = 20f;
@@ -35,6 +37,5 @@ public class RangeAttack : MonoBehaviour, IAttack
                 projectile.Configure(damageAmount, targetLayer, gameObject);
         }
         
-        _animationBehaviour.TriggerRangeAttack();
     }
 }
