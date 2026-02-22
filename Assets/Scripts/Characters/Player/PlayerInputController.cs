@@ -59,7 +59,11 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed) OnJumpEvent.Invoke();
+        if (context.performed)
+        {
+            AudioManager.Instance.PlaySFX("Jump", transform);
+            OnJumpEvent.Invoke();
+        }
     }
 
     public void OnCrouch(InputAction.CallbackContext context)

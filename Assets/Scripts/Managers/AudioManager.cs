@@ -12,10 +12,6 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float sfxVolume = 1f;
     [Range(0f, 1f)] public float musicVolume = 0.5f;
 
-    [Header("SFX 3D Settings")]
-    public float minDistance = 1f;
-    public float maxDistance = 20f;
-
     [Header("Sound Effects")]
     public SoundEffect[] soundEffects;
 
@@ -56,6 +52,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(string sfxName, Transform spawnTransform)
     {
+        Debug.Log($"[AudioManager] Playing SFX: '{sfxName}' at position {spawnTransform.position}");
         if (!sfxDict.TryGetValue(sfxName, out SoundEffect sfx))
         {
             Debug.LogWarning($"[AudioManager] SFX not found: '{sfxName}'");
@@ -73,23 +70,19 @@ public class AudioManager : MonoBehaviour
         go.transform.position = spawnTransform.position;
         go.transform.SetParent(null);
 
-        // Configurar AudioSource
+        // Configurar AudioSource en 2D
         AudioSource audioSource = go.AddComponent<AudioSource>();
         audioSource.clip = sfx.clip;
         audioSource.volume = sfx.volume * sfxVolume;
         audioSource.pitch = sfx.pitch;
-        audioSource.spatialBlend = 1f;
-        audioSource.minDistance = minDistance;
-        audioSource.maxDistance = maxDistance;
-        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.spatialBlend = 0f; // 2D - se escucha igual desde cualquier distancia
         audioSource.playOnAwake = false;
 
         // Play sound
         audioSource.Play();
 
         // Destroy gameobject after clip length
-        float clipLength = audioSource.clip.length;
-        Destroy(go, clipLength);
+        Destroy(go, audioSource.clip.length);
     }
 
     public void PlayAccelerator(Transform t) => PlaySFX("Accelerator", t);
