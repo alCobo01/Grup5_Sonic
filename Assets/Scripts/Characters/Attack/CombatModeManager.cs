@@ -9,7 +9,7 @@ public class CombatModeManager : MonoBehaviour
     
     private PlayerInputController _inputController;
     private PlayerAttackController _attackController;
-    //private AnimationBehaviour _animationBehaviour;
+    private AnimationBehaviour _animationBehaviour;
     
     private MeleeAttack _meleeAttack;
     private RangeAttack _rangeAttack;
@@ -18,7 +18,7 @@ public class CombatModeManager : MonoBehaviour
     {
         _inputController = GetComponent<PlayerInputController>();
         _attackController = GetComponent<PlayerAttackController>();
-       // _animationBehaviour = GetComponent<AnimationBehaviour>();
+        _animationBehaviour = GetComponent<AnimationBehaviour>();
         
         _meleeAttack = GetComponent<MeleeAttack>();
         _rangeAttack = GetComponent<RangeAttack>();
@@ -32,7 +32,10 @@ public class CombatModeManager : MonoBehaviour
 
     private void HandleAim(bool isAiming)
     {
-       // _animationBehaviour.SetBool(IsAimingHash, isAiming);
+        if (_animationBehaviour != null)
+        {
+            _animationBehaviour.SetAiming(isAiming);
+        }
         
         switch (isAiming)
         {
