@@ -16,6 +16,10 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
+        if (_animationBehaviour == null)
+        {
+            _animationBehaviour = GetComponentInParent<AnimationBehaviour>();
+        }
     }
 
     public void Attack()

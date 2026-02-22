@@ -1,35 +1,45 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] private GameObject[] checkPoints;
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private float spawnOffset = 2f;
     
     private GameObject _player;
     private int _indexCheckPoints;
+    private Vector3 _lastSpawnPosition;
+    private Transform _lastCheckpointTransform;
 
     private void Awake()
     {
         Instance = this;
 
-        if (_indexCheckPoints >= checkPoints.Length)
+        _indexCheckPoints = PlayerPrefs.GetInt("checkPointIndex", 0);
+        if (_indexCheckPoints < 0 || _indexCheckPoints >= checkPoints.Length)
         {
             PlayerPrefs.SetInt("checkPointIndex", 0);
             _indexCheckPoints = 0;
         }
 
-        _indexCheckPoints = PlayerPrefs.GetInt("checkPointIndex");
         _player = GameObject.FindGameObjectWithTag("Player");
-        
+
+        Transform cpTransform = checkPoints[_indexCheckPoints].transform;
+        Vector3 spawnPosition = cpTransform.position - cpTransform.forward * spawnOffset;
+
+        _lastSpawnPosition = spawnPosition;
+        _lastCheckpointTransform = cpTransform;
+
         if (_player == null)
         {
-            _player = Instantiate(playerPrefab, checkPoints[_indexCheckPoints].transform.position, Quaternion.identity);
+            _player = Instantiate(playerPrefab, spawnPosition, cpTransform.rotation);
         }
         else
         {
-            _player.transform.position = checkPoints[_indexCheckPoints].transform.position;
+            LoadPlayerOnCheckpoint(spawnPosition, cpTransform);
         }
     }
     
@@ -40,13 +50,54 @@ public class GameManager : MonoBehaviour
             if (checkPoints[i] == checkPoint && i > _indexCheckPoints)
             {
                 PlayerPrefs.SetInt("checkPointIndex", i);
+                _indexCheckPoints = i;
+
+                Transform cpTransform = checkPoints[i].transform;
+                _lastSpawnPosition = cpTransform.position - cpTransform.forward * spawnOffset;
+                _lastCheckpointTransform = cpTransform;
             }
         }
     }
-    
+    public void LoadPlayerOnCheckpoint(Vector3 spawnPosition, Transform cpTransform)
+    {
+        _player.transform.position = spawnPosition;
+        _player.transform.rotation = cpTransform.rotation;
+    }
+    public void LoadPlayerOnCheckpoint() { LoadPlayerOnCheckpoint(_lastSpawnPosition, _lastCheckpointTransform); }
     public void SetStartPoint()
     {
         PlayerPrefs.SetInt("checkPointIndex", 0);
         _indexCheckPoints = 0;
+    }
+    private void OnEnable()
+    {
+        BaseMenu.RestartCheckPoint += SetStartPoint;
+        PlayerHealthController.ReloadPlayer += HandleReloadPlayer;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealthController.ReloadPlayer -= HandleReloadPlayer;
+        BaseMenu.RestartCheckPoint -= SetStartPoint;
+    }
+
+    private void HandleReloadPlayer()
+    {
+        StartCoroutine(ReloadSequence());
+    }
+
+    private System.Collections.IEnumerator ReloadSequence()
+    {
+        if (ScreenFader.Instance != null)
+        {
+            yield return ScreenFader.Instance.FadeOut();
+        }
+
+        LoadPlayerOnCheckpoint();
+
+        if (ScreenFader.Instance != null)
+        {
+            yield return ScreenFader.Instance.FadeIn();
+        }
     }
 }
