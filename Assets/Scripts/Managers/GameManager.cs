@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [SerializeField] private GameObject[] checkPoints;
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private float spawnOffset = 2f;
     
     private GameObject _player;
     private int _indexCheckPoints;
@@ -14,22 +15,26 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
-        if (_indexCheckPoints >= checkPoints.Length)
+        _indexCheckPoints = PlayerPrefs.GetInt("checkPointIndex", 0);
+        if (_indexCheckPoints < 0 || _indexCheckPoints >= checkPoints.Length)
         {
             PlayerPrefs.SetInt("checkPointIndex", 0);
             _indexCheckPoints = 0;
         }
 
-        _indexCheckPoints = PlayerPrefs.GetInt("checkPointIndex");
         _player = GameObject.FindGameObjectWithTag("Player");
+
+        Transform cpTransform = checkPoints[_indexCheckPoints].transform;
+        Vector3 spawnPosition = cpTransform.position - cpTransform.forward * spawnOffset;
         
         if (_player == null)
         {
-            _player = Instantiate(playerPrefab, checkPoints[_indexCheckPoints].transform.position, Quaternion.identity);
+            _player = Instantiate(playerPrefab, spawnPosition, cpTransform.rotation);
         }
         else
         {
-            _player.transform.position = checkPoints[_indexCheckPoints].transform.position;
+            _player.transform.position = spawnPosition;
+            _player.transform.rotation = cpTransform.rotation;
         }
     }
     
@@ -48,5 +53,14 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("checkPointIndex", 0);
         _indexCheckPoints = 0;
+    }
+    private void OnEnable()
+    {
+        BaseMenu.RestartCheckPoint += SetStartPoint;
+    }
+
+    private void OnDisable()
+    {
+        BaseMenu.RestartCheckPoint -= SetStartPoint;
     }
 }
