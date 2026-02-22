@@ -8,7 +8,7 @@ public class NPC : MonoBehaviour, IInteractable
 {
     [SerializeField] private NPCDialogue dialogueData;
     [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TMP_Text dialogueText, nameText;
+    [SerializeField] private TMP_Text dialogueText;
 
     private int _dialogueIndex;
     private bool _isTyping, _isDialogueActive;
@@ -25,9 +25,7 @@ public class NPC : MonoBehaviour, IInteractable
     {
         _isDialogueActive = true;
         _dialogueIndex = 0;
-
-        nameText.SetText(dialogueData.npcName);
-
+        
         dialoguePanel.SetActive(true);
         StartCoroutine(TypeLine());
     }
@@ -64,16 +62,13 @@ public class NPC : MonoBehaviour, IInteractable
         _isTyping = false;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.transform.parent.TryGetComponent(out PlayerInputController player))
-        {
-            if (_isDialogueActive)
-                EndDialogue();
-        }
+        if (!other.gameObject.TryGetComponent(out PlayerInputController player)) return;
+        if (_isDialogueActive) EndDialogue();
     }
 
-    public void EndDialogue()
+    private void EndDialogue()
     {
         StopAllCoroutines();
         _isDialogueActive = false;

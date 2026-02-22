@@ -10,14 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aebd184e7d90642efb392e2a28fd48dc, type: 3}
-  m_Name: TestChaosDialoge
+  m_Name: Chaos Dialogue Data
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
-  npcName: Chaos
-  npcPortrait: {fileID: 719968605, guid: 5fe0ad428ce5e1e47b57de0caa7a9f4f, type: 3}
   dialogueLines:
-  - Miaw
-  - Feo
+  - Welcome to Sonic Re-imagined!
+  - Your objective is to get the hidden gem...
+  - 'to unlock the final part of the map! '
+  - I'll be following you to make sure you don't get lost
   typingSpeed: 0.05
-  voiceSound: {fileID: 0}
-  autoProgressLines: 
-  autoProgressDelay: 1.5
