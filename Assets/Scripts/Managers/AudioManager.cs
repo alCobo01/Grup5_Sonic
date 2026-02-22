@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
             PlayMusic(backgroundMusic);
     }
 
-    public void PlaySFX(string sfxName, Vector3 position)
+    public void PlaySFX(string sfxName, Transform spawnTransform)
     {
         if (!sfxDict.TryGetValue(sfxName, out SoundEffect sfx))
         {
@@ -62,41 +62,51 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (sfx.clip == null) return;
+        if (sfx.clip == null)
+        {
+            Debug.LogWarning($"[AudioManager] Clip is null on SFX: '{sfxName}'");
+            return;
+        }
 
+        // Spawn gameobject
         GameObject go = new GameObject($"SFX_{sfx.clip.name}");
-        go.transform.position = position;
+        go.transform.position = spawnTransform.position;
         go.transform.SetParent(null);
 
-        AudioSource src = go.AddComponent<AudioSource>();
-        src.clip = sfx.clip;
-        src.volume = sfx.volume * sfxVolume;
-        src.pitch = sfx.pitch;
-        src.spatialBlend = 1f;
-        src.minDistance = minDistance;
-        src.maxDistance = maxDistance;
-        src.rolloffMode = AudioRolloffMode.Logarithmic;
-        src.playOnAwake = false;
-        src.Play();
+        // Configurar AudioSource
+        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.clip = sfx.clip;
+        audioSource.volume = sfx.volume * sfxVolume;
+        audioSource.pitch = sfx.pitch;
+        audioSource.spatialBlend = 1f;
+        audioSource.minDistance = minDistance;
+        audioSource.maxDistance = maxDistance;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.playOnAwake = false;
 
-        Destroy(go, sfx.clip.length / Mathf.Abs(sfx.pitch));
+        // Play sound
+        audioSource.Play();
+
+        // Destroy gameobject after clip length
+        float clipLength = audioSource.clip.length;
+        Destroy(go, clipLength);
     }
 
-    public void PlayAccelerator(Vector3 pos) => PlaySFX("Accelerator", pos);
-    public void PlayBoost(Vector3 pos) => PlaySFX("BoostVelocity", pos);
-    public void PlayCheckpoint(Vector3 pos) => PlaySFX("Checkpoint", pos);
-    public void PlayEnemyShot(Vector3 pos) => PlaySFX("EnemyShot", pos);
-    public void PlayShield(Vector3 pos) => PlaySFX("Shield", pos);
-    public void PlayEnemyDeath(Vector3 pos) => PlaySFX("EnemyDeath", pos);
-    public void PlayLoseRings(Vector3 pos) => PlaySFX("LoseRings", pos);
-    public void PlaySpikes(Vector3 pos) => PlaySFX("Spikes", pos);
-    public void PlayPickEmerald(Vector3 pos) => PlaySFX("PickEmerald", pos);
-    public void PlayPickRings(Vector3 pos) => PlaySFX("PickRings", pos);
-    public void PlayRunning(Vector3 pos) => PlaySFX("Running", pos);
-    public void PlayJump(Vector3 pos) => PlaySFX("Jump", pos);
-    public void PlayPowerUp(Vector3 pos) => PlaySFX("PowerUp", pos);
-    public void PlayTrampolines(Vector3 pos) => PlaySFX("Trampolines", pos);
-    public void PlayWalking(Vector3 pos) => PlaySFX("Walking", pos);
+    public void PlayAccelerator(Transform t) => PlaySFX("Accelerator", t);
+    public void PlayBoost(Transform t) => PlaySFX("BoostVelocity", t);
+    public void PlayCheckpoint(Transform t) => PlaySFX("Checkpoint", t);
+    public void PlayEnemyShot(Transform t) => PlaySFX("EnemyShot", t);
+    public void PlayShield(Transform t) => PlaySFX("Shield", t);
+    public void PlayEnemyDeath(Transform t) => PlaySFX("EnemyDeath", t);
+    public void PlayLoseRings(Transform t) => PlaySFX("LoseRings", t);
+    public void PlaySpikes(Transform t) => PlaySFX("Spikes", t);
+    public void PlayPickEmerald(Transform t) => PlaySFX("PickEmerald", t);
+    public void PlayPickRings(Transform t) => PlaySFX("PickRings", t);
+    public void PlayRunning(Transform t) => PlaySFX("Running", t);
+    public void PlayJump(Transform t) => PlaySFX("Jump", t);
+    public void PlayPowerUp(Transform t) => PlaySFX("PowerUp", t);
+    public void PlayTrampolines(Transform t) => PlaySFX("Trampolines", t);
+    public void PlayWalking(Transform t) => PlaySFX("Walking", t);
 
     public void PlayMusic(AudioClip clip)
     {
