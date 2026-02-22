@@ -14,6 +14,7 @@ public class Accelerator : MonoBehaviour, ILauncher
 
     public void Launch(Rigidbody rb)
     {
+        AudioManager.Instance.PlayAccelerator(transform);
         Vector3 direction = -transform.right;
 
         float currentSpeed = Vector3.Dot(rb.linearVelocity, direction);

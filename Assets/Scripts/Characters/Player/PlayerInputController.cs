@@ -17,6 +17,8 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 
     private bool _crouchHeld;
     private InputSystem_Actions _inputActions;
+
+    [SerializeField] private AudioClip _jumpClip;
     
     private void Awake()
     {
@@ -61,7 +63,6 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
     {
         if (context.performed)
         {
-            AudioManager.Instance.PlaySFX("Jump", transform);
             OnJumpEvent.Invoke();
         }
     }

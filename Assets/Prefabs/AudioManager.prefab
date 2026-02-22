@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2637499587548984571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6563946312569772944}
+  - component: {fileID: 3145503411685217356}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6563946312569772944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637499587548984571}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 331.34152, y: 2.12792, z: 596.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3145503411685217356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637499587548984571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4004412d89e952d4cbb7c72fc6da227f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  dontDestroyOnLoad: 1
+  sfxVolume: 1
+  musicVolume: 0
+  soundFXObject: {fileID: 5037157384826020768, guid: 6bc33aa2e124e1d4e808bc3ccc0b086f, type: 3}
+  soundEffects:
+  - name: PickRings
+    clip: {fileID: 8300000, guid: 8563032e147c8f9499d601710259a1cc, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Accelerator
+    clip: {fileID: 8300000, guid: 51af4ade626c3384c8263cd129ddbeee, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Checkpoint
+    clip: {fileID: 8300000, guid: 06d906eb325ed8b43a1d0105b4296a26, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Shield
+    clip: {fileID: 8300000, guid: a08a62444895cf94d8bdb3b61d4db6fd, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: EnemyDeath
+    clip: {fileID: 8300000, guid: c3b1492ced96c9144aaf6435b46030b3, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: LoseRings
+    clip: {fileID: 8300000, guid: 5dc06cd569c15c8488cacd063a5b8387, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Spikes
+    clip: {fileID: 8300000, guid: 89185206ad35e704fa75f46f49932bde, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: PickEmerald
+    clip: {fileID: 8300000, guid: 5bde42b730038ec4390b2fce8b34b95f, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Running
+    clip: {fileID: 8300000, guid: a51740fb82583684c93c0125a71aaa1d, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Jump
+    clip: {fileID: 8300000, guid: 66fc51a5587253844af4c8663671246c, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: PowerUp
+    clip: {fileID: 8300000, guid: 3d5bb66704218f74b9e3228e1cf1eab2, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Trampolines
+    clip: {fileID: 8300000, guid: f9529baab3659624790723261366f145, type: 3}
+    volume: 1
+    pitch: 0.5
+  - name: Walking
+    clip: {fileID: 8300000, guid: 6f7a37d71383bfe4fa65eb1408b27ba3, type: 3}
+    volume: 1
+    pitch: 0.5
+  backgroundMusic: {fileID: 8300000, guid: 61962f1e227542142969389ea8962d62, type: 3}

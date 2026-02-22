@@ -17,6 +17,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     
     private void OnTriggerEnter(Collider other)
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (_hasBroken) return;
         if (collectMode != PowerUpCollectMode.Touch) return;
         Collect(other.gameObject);
@@ -24,6 +25,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter(Collision collision)
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (_hasBroken) return;
         if (collectMode != PowerUpCollectMode.Touch) return;
         Collect(collision.gameObject);
@@ -31,6 +33,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (collectMode != PowerUpCollectMode.Break) return;
         if (damage == 0) return;
         CollectFromFallback();
@@ -38,12 +41,14 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
 
     public void InstantKill()
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (collectMode != PowerUpCollectMode.Break) return;
         CollectFromFallback();
     }
 
     private void Collect(GameObject interactor)
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (_hasBroken) return;
         var powerUpController = interactor.GetComponentInParent<PlayerPowerUpController>();
         powerUpController.ActivatePowerUp(powerUpData);
@@ -52,6 +57,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
 
     private void CollectFromFallback()
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (_hasBroken) return;
         _hasBroken = true;
         breakCollector.ActivatePowerUp(powerUpData);
@@ -62,6 +68,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
 
     private void SwapToBrokenVisuals()
     {
+        AudioManager.Instance.PlayPickRings(transform);
         if (!brokenPrefab) return;
         Instantiate(brokenPrefab, transform.position, transform.rotation);
     }

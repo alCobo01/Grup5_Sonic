@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float sfxVolume = 1f;
     [Range(0f, 1f)] public float musicVolume = 0.5f;
 
+    [Header("SFX Prefab")]
+    [Tooltip("Prefab con AudioSource configurado. Si es null se crea uno básico.")]
+    public AudioSource soundFXObject;
+
     [Header("Sound Effects")]
     public SoundEffect[] soundEffects;
 
@@ -52,7 +56,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(string sfxName, Transform spawnTransform)
     {
-        Debug.Log($"[AudioManager] Playing SFX: '{sfxName}' at position {spawnTransform.position}");
         if (!sfxDict.TryGetValue(sfxName, out SoundEffect sfx))
         {
             Debug.LogWarning($"[AudioManager] SFX not found: '{sfxName}'");
@@ -65,24 +68,30 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Spawn gameobject
-        GameObject go = new GameObject($"SFX_{sfx.clip.name}");
-        go.transform.position = spawnTransform.position;
-        go.transform.SetParent(null);
+        // Spawn gameobject desde prefab o uno básico
+        AudioSource audioSource = soundFXObject != null
+            ? Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity)
+            : new GameObject($"SFX_{sfx.clip.name}").AddComponent<AudioSource>();
 
-        // Configurar AudioSource en 2D
-        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.transform.position = spawnTransform.position;
+        audioSource.transform.SetParent(null);
+
+        // Set clip
         audioSource.clip = sfx.clip;
+        // Set volume
         audioSource.volume = sfx.volume * sfxVolume;
+        // Set pitch
         audioSource.pitch = sfx.pitch;
-        audioSource.spatialBlend = 0f; // 2D - se escucha igual desde cualquier distancia
+        // 2D - se escucha igual desde cualquier distancia
+        audioSource.spatialBlend = 0f;
         audioSource.playOnAwake = false;
 
         // Play sound
         audioSource.Play();
 
         // Destroy gameobject after clip length
-        Destroy(go, audioSource.clip.length);
+        float clipLength = audioSource.clip.length;
+        Destroy(audioSource.gameObject, clipLength);
     }
 
     public void PlayAccelerator(Transform t) => PlaySFX("Accelerator", t);
