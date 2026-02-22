@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour
     [Range(0f, 1f)] public float sfxVolume = 1f;
     [Range(0f, 1f)] public float musicVolume = 0.5f;
 
+    [Header("SFX 3D Settings")]
+    public float minDistance = 1f;
+    public float maxDistance = 20f;
+
     [Header("Sound Effects")]
     public SoundEffect[] soundEffects;
 
@@ -22,13 +26,11 @@ public class AudioManager : MonoBehaviour
     public class SoundEffect
     {
         public string name;
-        public AudioClip[] clips;
+        public AudioClip clip;
         [Range(0f, 1f)] public float volume = 1f;
         [Range(0.5f, 2f)] public float pitch = 1f;
-        [Range(0f, 0.3f)] public float pitchVariation = 0.05f;
     }
 
-    private AudioSource sfxSource;
     private AudioSource musicSource;
     private Dictionary<string, SoundEffect> sfxDict = new Dictionary<string, SoundEffect>();
 
@@ -38,13 +40,11 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         if (dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
 
-        sfxSource = gameObject.AddComponent<AudioSource>();
-        sfxSource.playOnAwake = false;
-
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.loop = true;
         musicSource.playOnAwake = false;
         musicSource.volume = musicVolume;
+        musicSource.spatialBlend = 0f;
 
         foreach (var sfx in soundEffects)
             if (!string.IsNullOrEmpty(sfx.name))
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
             PlayMusic(backgroundMusic);
     }
 
-    public void PlaySFX(string sfxName)
+    public void PlaySFX(string sfxName, Vector3 position)
     {
         if (!sfxDict.TryGetValue(sfxName, out SoundEffect sfx))
         {
@@ -62,31 +62,41 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (sfx.clips == null || sfx.clips.Length == 0) return;
+        if (sfx.clip == null) return;
 
-        AudioClip clip = sfx.clips[Random.Range(0, sfx.clips.Length)];
-        float finalVol = sfx.volume * sfxVolume;
-        float finalPitch = sfx.pitch + Random.Range(-sfx.pitchVariation, sfx.pitchVariation);
+        GameObject go = new GameObject($"SFX_{sfx.clip.name}");
+        go.transform.position = position;
+        go.transform.SetParent(null);
 
-        sfxSource.pitch = finalPitch;
-        sfxSource.PlayOneShot(clip, finalVol);
+        AudioSource src = go.AddComponent<AudioSource>();
+        src.clip = sfx.clip;
+        src.volume = sfx.volume * sfxVolume;
+        src.pitch = sfx.pitch;
+        src.spatialBlend = 1f;
+        src.minDistance = minDistance;
+        src.maxDistance = maxDistance;
+        src.rolloffMode = AudioRolloffMode.Logarithmic;
+        src.playOnAwake = false;
+        src.Play();
+
+        Destroy(go, sfx.clip.length / Mathf.Abs(sfx.pitch));
     }
 
-    public void PlayAccelerator() => PlaySFX("Accelerator");
-    public void PlayBoost() => PlaySFX("BoostVelocity");
-    public void PlayCheckpoint() => PlaySFX("Checkpoint");
-    public void PlayEnemyShot() => PlaySFX("EnemyShot");
-    public void PlayShield() => PlaySFX("Shield");
-    public void PlayEnemyDeath() => PlaySFX("EnemyDeath");
-    public void PlayLoseRings() => PlaySFX("LoseRings");
-    public void PlaySpikes() => PlaySFX("Spikes");
-    public void PlayPickEmerald() => PlaySFX("PickEmerald");
-    public void PlayPickRings() => PlaySFX("PickRings");
-    public void PlayRunning() => PlaySFX("Running");
-    public void PlayJump() => PlaySFX("Jump");
-    public void PlayPowerUp() => PlaySFX("PowerUp");
-    public void PlayTrampolines() => PlaySFX("Trampolines");
-    public void PlayWalking() => PlaySFX("Walking");
+    public void PlayAccelerator(Vector3 pos) => PlaySFX("Accelerator", pos);
+    public void PlayBoost(Vector3 pos) => PlaySFX("BoostVelocity", pos);
+    public void PlayCheckpoint(Vector3 pos) => PlaySFX("Checkpoint", pos);
+    public void PlayEnemyShot(Vector3 pos) => PlaySFX("EnemyShot", pos);
+    public void PlayShield(Vector3 pos) => PlaySFX("Shield", pos);
+    public void PlayEnemyDeath(Vector3 pos) => PlaySFX("EnemyDeath", pos);
+    public void PlayLoseRings(Vector3 pos) => PlaySFX("LoseRings", pos);
+    public void PlaySpikes(Vector3 pos) => PlaySFX("Spikes", pos);
+    public void PlayPickEmerald(Vector3 pos) => PlaySFX("PickEmerald", pos);
+    public void PlayPickRings(Vector3 pos) => PlaySFX("PickRings", pos);
+    public void PlayRunning(Vector3 pos) => PlaySFX("Running", pos);
+    public void PlayJump(Vector3 pos) => PlaySFX("Jump", pos);
+    public void PlayPowerUp(Vector3 pos) => PlaySFX("PowerUp", pos);
+    public void PlayTrampolines(Vector3 pos) => PlaySFX("Trampolines", pos);
+    public void PlayWalking(Vector3 pos) => PlaySFX("Walking", pos);
 
     public void PlayMusic(AudioClip clip)
     {
