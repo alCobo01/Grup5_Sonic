@@ -11,6 +11,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     [SerializeField] private PowerUp powerUpData;
     [SerializeField] private PowerUpCollectMode collectMode;
     [SerializeField] private GameObject brokenPrefab;
+    [SerializeField] private GameObject brokenVFX;
 
     private PlayerPowerUpController _breakCollector;
     private bool _hasBroken;
@@ -74,6 +75,8 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     private void SwapToBrokenVisuals()
     {
         if (!brokenPrefab) return;
+        var vfx = Instantiate(brokenVFX, transform.position, transform.rotation);
+        Destroy(vfx, 2f);
         Instantiate(brokenPrefab, transform.position, transform.rotation);
     }
 }

@@ -125,8 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpPickup
   powerUpData: {fileID: 11400000, guid: f7ead9807f79141138777b0fb36dfacd, type: 2}
   collectMode: 1
-  breakCollector: {fileID: -44545436096039276, guid: c8ef26a7c0df64e11b3cf79ee189723e, type: 3}
   brokenPrefab: {fileID: 655848705637457203, guid: 5c46db380b7ef464c91200dc039b7da8, type: 3}
+  brokenVFX: {fileID: 81427696566320196, guid: 3b31aa933fb211640aa00a7fe881f2ae, type: 3}
 --- !u!65 &4231746217627333365
 BoxCollider:
   m_ObjectHideFlags: 0
