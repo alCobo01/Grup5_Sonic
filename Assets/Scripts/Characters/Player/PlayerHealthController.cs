@@ -6,11 +6,15 @@ using UnityEngine.InputSystem.XR.Haptics;
 [RequireComponent(typeof(HealthBehaviour))]
 public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 {
+
     public static event UnityAction OnDeath;
     public static event UnityAction<int> OnRingsChanged;
     public static event UnityAction<int> OnLivesChanged;
     public static event UnityAction OnLifeLost;
-    
+    public static event Action ReloadPlayer = delegate { };
+
+    public float knockbackForce =10f;
+    public Rigidbody _rb;
     public bool IsInvincible { get; set; }
     public int CurrentRings { get; private set; }
     public int CurrentLives => _health != null ? _health.CurrentLives : 0;
@@ -18,7 +22,11 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     private int _currentShield;
     private HealthBehaviour _health;
 
-    private void Awake() => _health = GetComponent<HealthBehaviour>();
+    private void Awake()
+    {
+        _health = GetComponent<HealthBehaviour>();
+        _rb = GetComponent<Rigidbody>();
+    }
 
     private void Start()
     {
@@ -77,6 +85,8 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         
         // Damage reduces rings
         CurrentRings = Mathf.Max(0, CurrentRings - damage);
+        //Knockback
+        _rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
         OnRingsChanged?.Invoke(CurrentRings);
 
         // If rings reach 0, lose a life
@@ -84,7 +94,8 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         {
             _health.LoseLife();
             OnLivesChanged?.Invoke(_health.CurrentLives);
-            
+            ReloadPlayer.Invoke();
+
             if (_health.IsDead) OnDeath?.Invoke();
             else OnLifeLost?.Invoke();
         }
@@ -97,5 +108,5 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 
         if (_health.IsDead) OnDeath?.Invoke();
         else OnLifeLost?.Invoke();
-    } 
+    }
 }

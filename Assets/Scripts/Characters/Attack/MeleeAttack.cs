@@ -16,11 +16,23 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
+        if (_animationBehaviour == null)
+        {
+            _animationBehaviour = GetComponentInParent<AnimationBehaviour>();
+        }
     }
 
     public void Attack()
     {
-        _animationBehaviour.TriggerMeleeAttack();
+        Debug.Log("Melee Attack Called");
+        if (_animationBehaviour != null)
+        {
+            _animationBehaviour.TriggerMeleeAttack();
+        }
+        else
+        {
+            Debug.LogWarning("AnimationBehaviour not found on " + gameObject.name);
+        }
         DealDamage();
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     
     private GameObject _player;
     private int _indexCheckPoints;
+    private Vector3 _lastSpawnPosition;
+    private Transform _lastCheckpointTransform;
 
     private void Awake()
     {
@@ -26,15 +29,17 @@ public class GameManager : MonoBehaviour
 
         Transform cpTransform = checkPoints[_indexCheckPoints].transform;
         Vector3 spawnPosition = cpTransform.position - cpTransform.forward * spawnOffset;
-        
+
+        _lastSpawnPosition = spawnPosition;
+        _lastCheckpointTransform = cpTransform;
+
         if (_player == null)
         {
             _player = Instantiate(playerPrefab, spawnPosition, cpTransform.rotation);
         }
         else
         {
-            _player.transform.position = spawnPosition;
-            _player.transform.rotation = cpTransform.rotation;
+            LoadPlayerOnCheckpoint(spawnPosition, cpTransform);
         }
     }
     
@@ -45,10 +50,20 @@ public class GameManager : MonoBehaviour
             if (checkPoints[i] == checkPoint && i > _indexCheckPoints)
             {
                 PlayerPrefs.SetInt("checkPointIndex", i);
+                _indexCheckPoints = i;
+
+                Transform cpTransform = checkPoints[i].transform;
+                _lastSpawnPosition = cpTransform.position - cpTransform.forward * spawnOffset;
+                _lastCheckpointTransform = cpTransform;
             }
         }
     }
-    
+    public void LoadPlayerOnCheckpoint(Vector3 spawnPosition, Transform cpTransform)
+    {
+        _player.transform.position = spawnPosition;
+        _player.transform.rotation = cpTransform.rotation;
+    }
+    public void LoadPlayerOnCheckpoint() { LoadPlayerOnCheckpoint(_lastSpawnPosition, _lastCheckpointTransform); }
     public void SetStartPoint()
     {
         PlayerPrefs.SetInt("checkPointIndex", 0);
@@ -57,10 +72,12 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         BaseMenu.RestartCheckPoint += SetStartPoint;
+        PlayerHealthController.ReloadPlayer += LoadPlayerOnCheckpoint;
     }
 
     private void OnDisable()
     {
+        PlayerHealthController.ReloadPlayer -= LoadPlayerOnCheckpoint;
         BaseMenu.RestartCheckPoint -= SetStartPoint;
     }
 }
