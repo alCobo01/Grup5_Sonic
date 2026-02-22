@@ -15,6 +15,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 
     public float knockbackForce =10f;
     public Rigidbody _rb;
+    [SerializeField] private float invincibilityDuration = 0.5f;
     public bool IsInvincible { get; set; }
     public int CurrentRings { get; private set; }
     public int CurrentLives => _health != null ? _health.CurrentLives : 0;
@@ -76,19 +77,17 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
             if (damage < _currentShield)
             {
                 _currentShield -= damage;
+                StartCoroutine(InvincibilityCoroutine());
                 return;
             }
             
             damage -= _currentShield;
             _currentShield = 0;
         }
-        
-        // Damage reduces rings
-        CurrentRings = Mathf.Max(0, CurrentRings - damage);
+
         //Knockback
         _rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
-        OnRingsChanged?.Invoke(CurrentRings);
-
+        
         // If rings reach 0, lose a life
         if (CurrentRings <= 0)
         {
@@ -99,6 +98,19 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
             if (_health.IsDead) OnDeath?.Invoke();
             else OnLifeLost?.Invoke();
         }
+        else
+        {
+            CurrentRings = 0;
+            OnRingsChanged?.Invoke(CurrentRings);
+            StartCoroutine(InvincibilityCoroutine());
+        }
+    }
+
+    private System.Collections.IEnumerator InvincibilityCoroutine()
+    {
+        IsInvincible = true;
+        yield return new WaitForSeconds(invincibilityDuration);
+        IsInvincible = false;
     }
 
     public void InstantKill()

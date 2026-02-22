@@ -20,7 +20,11 @@ public class UIManager : MonoBehaviour
         PlayerHealthController.OnLivesChanged -= HandleLivesChanged;
     }
     
-    private void HandleRingsChanged(int rings) => ringsText.text = rings.ToString();
+    private void HandleRingsChanged(int rings)
+    {
+        ringsText.text = rings.ToString();
+        ringsText.color = (rings <= 0) ? Color.red : Color.white;
+    }
     
     private void HandleLivesChanged(int lives) => livesText.text = lives.ToString();
 }
