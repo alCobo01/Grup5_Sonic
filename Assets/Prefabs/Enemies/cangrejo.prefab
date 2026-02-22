@@ -728,6 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c08e4c4ef264925b27fde509579a7b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  dieVFX: {fileID: 81427696566320196, guid: 3b31aa933fb211640aa00a7fe881f2ae, type: 3}
 --- !u!114 &9022135425218348913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,6 +806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad316004ad3c421d8d2f546aec8e3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationBehaviour
+  animator: {fileID: 0}
+  animSpeedMultiplier: 0.1
 --- !u!65 &4348513384221043493
 BoxCollider:
   m_ObjectHideFlags: 0
