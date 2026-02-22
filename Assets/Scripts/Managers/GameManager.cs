@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
 
         Transform cpTransform = checkPoints[_indexCheckPoints].transform;
-        Vector3 spawnPosition = cpTransform.position - cpTransform.forward * spawnOffset;
+        Vector3 spawnPosition = cpTransform.position - cpTransform.right * spawnOffset;
 
         _lastSpawnPosition = spawnPosition;
         _lastCheckpointTransform = cpTransform;

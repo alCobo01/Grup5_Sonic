@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WinZoneTrigger : MonoBehaviour
 {
-    private static readonly int UsedHash = Animator.StringToHash("Chase");
+    private static readonly int UsedHash = Animator.StringToHash("Used");
     
     [Tooltip("Tag del jugador para detectar la colisión")]
     [SerializeField] private string playerTag = "Player";
