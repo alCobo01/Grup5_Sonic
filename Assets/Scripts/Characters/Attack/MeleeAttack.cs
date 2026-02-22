@@ -24,15 +24,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     public void Attack()
     {
-        Debug.Log("Melee Attack Called");
-        if (_animationBehaviour != null)
-        {
-            _animationBehaviour.TriggerMeleeAttack();
-        }
-        else
-        {
-            Debug.LogWarning("AnimationBehaviour not found on " + gameObject.name);
-        }
+        _animationBehaviour.TriggerMeleeAttack();
         DealDamage();
     }
 
