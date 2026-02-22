@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AnimationBehaviour))]
+//[RequireComponent(typeof(AnimationBehaviour))]
 public class RangeAttack : MonoBehaviour, IAttack
 {
     private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
@@ -37,6 +37,5 @@ public class RangeAttack : MonoBehaviour, IAttack
                 projectile.Configure(damageAmount, targetLayer, gameObject);
         }
         
-        _animationBehaviour.Trigger(RangeAttackHash);
     }
 }
