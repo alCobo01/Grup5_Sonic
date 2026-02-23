@@ -76,7 +76,6 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         {
             if (damage < _currentShield)
             {
-                AudioManager.Instance.PlayLoseRings(transform);
                 _currentShield -= damage;
                 StartCoroutine(InvincibilityCoroutine());
                 return;
@@ -88,8 +87,9 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 
         //Knockback
         _rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
-        
+
         // If rings reach 0, lose a life
+        AudioManager.Instance.PlayLoseRings(transform);
         if (CurrentRings <= 0)
         {
             _health.LoseLife();
