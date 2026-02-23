@@ -69,8 +69,10 @@ public class AudioManager : MonoBehaviour
     /// <summary>Reproduce la pista en la posición indicada del array.</summary>
     public void PlayMusicByIndex(int index)
     {
+        Debug.Log("ENTRO");
         if (backgroundMusics == null || backgroundMusics.Length == 0) return;
 
+        Debug.Log("Intento reproducir pista en índice: " + index);
         index = Mathf.Clamp(index, 0, backgroundMusics.Length - 1);
         currentMusicIndex = index;
         PlayMusic(backgroundMusics[currentMusicIndex]);
