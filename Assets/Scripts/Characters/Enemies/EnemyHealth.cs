@@ -34,6 +34,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     
     private void Die()
     {
+        AudioManager.Instance.PlayEnemyDeath(transform);
         _animationBehaviour.Trigger(DieHash);
     }
 

@@ -76,6 +76,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         }
         
         // Damage reduces rings
+        AudioManager.Instance.PlayLoseRings(transform);
         CurrentRings = Mathf.Max(0, CurrentRings - damage);
         OnRingsChanged?.Invoke(CurrentRings);
 

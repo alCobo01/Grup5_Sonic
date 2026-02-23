@@ -17,7 +17,6 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     
     private void OnTriggerEnter(Collider other)
     {
-        AudioManager.Instance.PlayPickRings(transform);
         if (_hasBroken) return;
         if (collectMode != PowerUpCollectMode.Touch) return;
         Collect(other.gameObject);
