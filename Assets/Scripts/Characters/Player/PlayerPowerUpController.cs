@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerPowerUpController : MonoBehaviour
 {
     private PlayerHealthController _healthController;
+    public bool HasKey { get; set; }
 
     private void Awake()
     {
