@@ -8,4 +8,8 @@ public class PowerUp : ScriptableObject
     public int amount;
     [Tooltip("Duration for timed power ups like Speed or Invincibility")]
     public float duration;
+
+    [Header("Audio")]
+    [Tooltip("Sonido que se reproduce al recoger este power up")]
+    public string sfxName;
 }
