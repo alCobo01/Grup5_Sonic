@@ -7,6 +7,7 @@ public class PlayerPowerUpController : MonoBehaviour
     [SerializeField] private GameObject shieldVFX;
     
     private PlayerHealthController _healthController;
+    public bool HasKey { get; set; }
 
     private void Awake()
     {
