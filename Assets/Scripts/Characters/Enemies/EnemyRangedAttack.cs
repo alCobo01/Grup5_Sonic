@@ -51,6 +51,7 @@ public class EnemyRangedAttack : MonoBehaviour
 
     private void Shoot()
     {
+        AudioManager.Instance.PlayEnemyShot(transform);
         var direction = (_target.position - firePoint.position).normalized;
         var proj = Instantiate(projectilePrefab, firePoint.position, 
             Quaternion.LookRotation(direction));

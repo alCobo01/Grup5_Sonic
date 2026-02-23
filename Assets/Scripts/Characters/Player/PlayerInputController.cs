@@ -17,6 +17,8 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 
     private bool _crouchHeld;
     private InputSystem_Actions _inputActions;
+
+    [SerializeField] private AudioClip _jumpClip;
     
     private void Awake()
     {
@@ -59,7 +61,8 @@ public class PlayerInputController : MonoBehaviour, IPlayerActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed) OnJumpEvent.Invoke();
+        if (context.performed)
+            OnJumpEvent.Invoke();
     }
 
     public void OnCrouch(InputAction.CallbackContext context)

@@ -18,6 +18,7 @@ public class Trampoline : MonoBehaviour, ILauncher
 
     public void Launch(Rigidbody rb)
     {
+        AudioManager.Instance.PlayTrampolines(transform);
         Vector3 direction = GetLaunchDirection();
 
         CancelVelocityOnAxis(rb, direction);

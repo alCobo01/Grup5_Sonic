@@ -39,6 +39,7 @@ public class PlayerCrouchBehaviour : MonoBehaviour
     private void HandleCrouchReleased()
     {
         BoostBasedOnCharge();
+        AudioManager.Instance.PlayBoost(transform);
         _crouchTimer = 0f;
         IsCrouching = false;
     }

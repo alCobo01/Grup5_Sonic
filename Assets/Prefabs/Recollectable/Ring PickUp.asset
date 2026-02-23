@@ -15,3 +15,4 @@ MonoBehaviour:
   type: 1
   amount: 1
   duration: 0
+  sfxName: PickRings

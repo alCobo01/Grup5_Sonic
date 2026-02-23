@@ -34,6 +34,7 @@ public class PlayerJumpBehaviour : MonoBehaviour
 
     private void HandleJump()
     {
+        AudioManager.Instance.PlayJump(transform);
         if (!_groundChecker.IsGrounded) return;
 
         _rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
