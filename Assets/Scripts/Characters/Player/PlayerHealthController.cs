@@ -76,6 +76,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         {
             if (damage < _currentShield)
             {
+                AudioManager.Instance.PlayLoseRings(transform);
                 _currentShield -= damage;
                 StartCoroutine(InvincibilityCoroutine());
                 return;
