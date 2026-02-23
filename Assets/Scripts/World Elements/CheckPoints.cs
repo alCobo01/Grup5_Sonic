@@ -6,12 +6,13 @@ public class CheckPoints : MonoBehaviour
     
     [SerializeField] private LayerMask playerLayer;
     private Animator _animator;
+    private bool _used = false;
     
     private void Awake() => _animator = GetComponent<Animator>();
     
     private void OnTriggerEnter(Collider collision)
     {
-        AudioManager.Instance.PlayCheckpoint(transform);
+        
         if (playerLayer.value != 0 && (playerLayer.value & (1 << collision.gameObject.layer)) == 0)
         {
             Debug.Log("Layer mismatch. Player layer: " + collision.gameObject.layer + " Mask: " + playerLayer.value);
@@ -19,8 +20,12 @@ public class CheckPoints : MonoBehaviour
 
         if (collision.CompareTag("Player") || collision.gameObject.GetComponentInParent<PlayerMovementBehaviour>() != null)
         {
-            _animator.SetTrigger(UsedHash);
-
+            if (!_used)
+            {
+                AudioManager.Instance.PlayCheckpoint(transform);
+                _animator.SetTrigger(UsedHash);
+                _used = true;
+            }
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.LastCheckPoint(gameObject);

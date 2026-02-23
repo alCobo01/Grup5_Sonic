@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CheckPoints
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!65 &-228331986908182959
 BoxCollider:
   m_ObjectHideFlags: 0

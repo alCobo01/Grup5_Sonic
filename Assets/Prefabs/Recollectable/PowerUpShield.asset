@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PowerUp
   type: 2
   amount: 3
-  duration: 5
+  duration: 15
   sfxName: Shield
