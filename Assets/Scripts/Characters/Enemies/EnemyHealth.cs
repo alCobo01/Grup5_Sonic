@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(HealthBehaviour))]
 [RequireComponent(typeof(AnimationBehaviour))]
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
+    public event UnityAction OnDeath;
     private static readonly int DieHash = Animator.StringToHash("Die");
+    
+    [SerializeField] private GameObject dieVFX;
+    [SerializeField] private float destroyDelay = -1f;
     
     private AnimationBehaviour _animationBehaviour;
     private HealthBehaviour _health;
@@ -36,8 +41,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         AudioManager.Instance.PlayEnemyDeath(transform);
         _animationBehaviour.Trigger(DieHash);
+        OnDeath?.Invoke();
+        
+        var instantiedVFX = Instantiate(dieVFX, transform.position, transform.rotation);
+        Destroy(instantiedVFX, 2f);
+
+        if (destroyDelay >= 0f)
+        {
+            Invoke(nameof(Destroy), destroyDelay);
+        }
     }
 
     public void Destroy() => Destroy(gameObject);
-    
 }

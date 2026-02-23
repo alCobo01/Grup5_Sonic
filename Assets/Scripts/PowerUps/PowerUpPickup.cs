@@ -10,10 +10,18 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
 {
     [SerializeField] private PowerUp powerUpData;
     [SerializeField] private PowerUpCollectMode collectMode;
-    [SerializeField] private PlayerPowerUpController breakCollector;
     [SerializeField] private GameObject brokenPrefab;
+    [SerializeField] private GameObject brokenVFX;
 
+    private PlayerPowerUpController _breakCollector;
     private bool _hasBroken;
+
+    private void Awake()
+    {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null && player.TryGetComponent(out PlayerPowerUpController powerUpController))
+            _breakCollector = powerUpController;
+    }
 
     private void PlayCollectSound()
     {
@@ -52,8 +60,8 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     {
         if (_hasBroken) return;
         PlayCollectSound();
-        var powerUpController = interactor.GetComponentInParent<PlayerPowerUpController>();
-        powerUpController.ActivatePowerUp(powerUpData);
+        if (interactor.TryGetComponent(out PlayerPowerUpController powerUpController))
+            powerUpController.ActivatePowerUp(powerUpData);
         Destroy(gameObject);
     }
 
@@ -62,7 +70,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
         if (_hasBroken) return;
         _hasBroken = true;
         PlayCollectSound();
-        breakCollector.ActivatePowerUp(powerUpData);
+        _breakCollector.ActivatePowerUp(powerUpData);
         SwapToBrokenVisuals();
         Destroy(gameObject);
     }
@@ -70,6 +78,8 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     private void SwapToBrokenVisuals()
     {
         if (!brokenPrefab) return;
+        var vfx = Instantiate(brokenVFX, transform.position, transform.rotation);
+        Destroy(vfx, 2f);
         Instantiate(brokenPrefab, transform.position, transform.rotation);
     }
 }

@@ -8,7 +8,7 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
-    private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
+    private static readonly int MeleeAttackHash = Animator.StringToHash("MeeleAttack");
 
     [SerializeField] private Animator animator;
     [SerializeField] private float animSpeedMultiplier = 0.1f;
@@ -31,30 +31,23 @@ public class AnimationBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (animator == null) return;
+        // Update Speed
+        Vector3 velocity = _rigidbody.linearVelocity;
+        Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
+        float currentSpeed = horizontalVelocity.magnitude;
+        animator.SetFloat(SpeedHash, currentSpeed, 0.1f, Time.deltaTime);
 
-        // Update Speed if Rigidbody is present
-        if (_rigidbody != null)
+        // Update Run  Animation Speed based on movement
+        if (_movement != null)
         {
-            Vector3 velocity = _rigidbody.linearVelocity;
-            Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
-            float currentSpeed = horizontalVelocity.magnitude;
-            animator.SetFloat(SpeedHash, currentSpeed, 0.1f, Time.deltaTime);
-
-            // Update Run Animation Speed based on movement if movement component is present
-            if (_movement != null)
-            {
-                var playbackSpeed = 1f;
-                playbackSpeed = currentSpeed > _movement.MaxSpeed * 0.75f ? 2f : Mathf.Max(1f, currentSpeed * animSpeedMultiplier);
-                animator.SetFloat(AnimSpeedHash, playbackSpeed);
-            }
+            var playbackSpeed = 1f;
+            playbackSpeed = currentSpeed > _movement.MaxSpeed * 0.75f ? 2f : Mathf.Max(1f, currentSpeed * animSpeedMultiplier);
+            animator.SetFloat(AnimSpeedHash, playbackSpeed);
         }
-
-        // Update Grounded state if ground checker is present
-        if (_groundChecker != null)
-        {
-            animator.SetBool(IsGroundedHash, _groundChecker.IsGrounded);
-        }
+        
+        // Update Grounded state
+        if (_groundChecker != null) animator.SetBool(IsGroundedHash, _groundChecker.IsGrounded);
+        
     }
     public void Trigger(int hash) => animator.SetTrigger(hash);
 
