@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -187,4 +188,22 @@ public class AudioManager : MonoBehaviour
     }
 
     public void SetSFXVolume(float value) => sfxVolume = Mathf.Clamp01(value);
+
+    public void PlayWinSequence(Transform t, string sfxName = "PowerUp")
+    {
+        StartCoroutine(WinSequenceRoutine(t, sfxName));
+    }
+
+    private IEnumerator WinSequenceRoutine(Transform t, string sfxName)
+    {
+        StopMusic();
+
+        if (sfxDict.TryGetValue(sfxName, out SoundEffect sfx) && sfx.clip != null)
+        {
+            PlaySFX(sfxName, t);
+            yield return new WaitForSeconds(sfx.clip.length);
+        }
+
+        PlayMusicByIndex(2);
+    }
 }

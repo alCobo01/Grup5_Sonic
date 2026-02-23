@@ -26,6 +26,7 @@ public class WinZoneTrigger : MonoBehaviour
     
     private void ShowWinMenu()
     {
+        AudioManager.Instance.PlayWinSequence(transform, "WinSoundEffect");
         _hasTriggered = true;
         MenuManager.Instance.ShowMenu<WinMenu>();
     }
