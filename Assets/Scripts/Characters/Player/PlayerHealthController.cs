@@ -87,8 +87,9 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 
         //Knockback
         _rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
-        
+
         // If rings reach 0, lose a life
+        AudioManager.Instance.PlayLoseRings(transform);
         if (CurrentRings <= 0)
         {
             _health.LoseLife();
