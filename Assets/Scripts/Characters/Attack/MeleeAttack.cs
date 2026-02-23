@@ -4,7 +4,6 @@ using System.Collections.Generic;
 //[RequireComponent(typeof(AnimationBehaviour))]
 public class MeleeAttack : MonoBehaviour, IAttack
 {
-    
     [SerializeField] private int damageAmount = 1;
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackRadius = 0.75f;
