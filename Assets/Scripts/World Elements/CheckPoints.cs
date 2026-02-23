@@ -11,6 +11,7 @@ public class CheckPoints : MonoBehaviour
     
     private void OnTriggerEnter(Collider collision)
     {
+        AudioManager.Instance.PlayCheckpoint(transform);
         if (playerLayer.value != 0 && (playerLayer.value & (1 << collision.gameObject.layer)) == 0)
         {
             Debug.Log("Layer mismatch. Player layer: " + collision.gameObject.layer + " Mask: " + playerLayer.value);

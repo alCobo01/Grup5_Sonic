@@ -20,11 +20,15 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     {
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player != null && player.TryGetComponent(out PlayerPowerUpController powerUpController))
-        {
             _breakCollector = powerUpController;
-        }
     }
-    
+
+    private void PlayCollectSound()
+    {
+        if (!string.IsNullOrEmpty(powerUpData.sfxName))
+            AudioManager.Instance.PlaySFX(powerUpData.sfxName, transform);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (_hasBroken) return;
@@ -55,10 +59,9 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     private void Collect(GameObject interactor)
     {
         if (_hasBroken) return;
-        
+        PlayCollectSound();
         if (interactor.TryGetComponent(out PlayerPowerUpController powerUpController))
             powerUpController.ActivatePowerUp(powerUpData);
-        
         Destroy(gameObject);
     }
 
@@ -66,8 +69,8 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     {
         if (_hasBroken) return;
         _hasBroken = true;
+        PlayCollectSound();
         _breakCollector.ActivatePowerUp(powerUpData);
-
         SwapToBrokenVisuals();
         Destroy(gameObject);
     }
