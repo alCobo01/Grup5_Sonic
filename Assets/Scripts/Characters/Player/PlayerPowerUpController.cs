@@ -4,13 +4,20 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerHealthController))]
 public class PlayerPowerUpController : MonoBehaviour
 {
+    [SerializeField] private GameObject shieldVFX;
+    
     private PlayerHealthController _healthController;
+    public bool HasKey { get; set; }
 
     private void Awake()
     {
-        _healthController = GetComponent<PlayerHealthController>();
-    }
-
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null && player.TryGetComponent(out PlayerHealthController healthController))
+        {
+            _healthController = healthController;
+        }
+    } 
+    
     public void ActivatePowerUp(PowerUp powerUp)
     {
         switch (powerUp.type)
@@ -36,7 +43,9 @@ public class PlayerPowerUpController : MonoBehaviour
     private IEnumerator ShieldRoutine(int amount, float duration)
     {
         _healthController.AddShield(amount);
+        shieldVFX.SetActive(true);
         yield return new WaitForSeconds(duration);
+        shieldVFX.SetActive(false);
         _healthController.RemoveShield(amount);
     }
 

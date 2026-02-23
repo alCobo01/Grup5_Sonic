@@ -4,7 +4,6 @@ using System.Collections.Generic;
 //[RequireComponent(typeof(AnimationBehaviour))]
 public class MeleeAttack : MonoBehaviour, IAttack
 {
-    
     [SerializeField] private int damageAmount = 1;
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackRadius = 0.75f;
@@ -16,6 +15,10 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
+        if (_animationBehaviour == null)
+        {
+            _animationBehaviour = GetComponentInParent<AnimationBehaviour>();
+        }
     }
 
     public void Attack()

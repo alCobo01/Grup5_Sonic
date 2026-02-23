@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationBehaviour))]
 public class ContactDamage : MonoBehaviour
 {
-  
-    
     [SerializeField] private int damageAmount = 1;
     [SerializeField] private LayerMask targetLayer;
 
