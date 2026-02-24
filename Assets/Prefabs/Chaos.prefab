@@ -85,6 +85,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c3511694731116f4d8773a50fbe6c787, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6414204732962907316}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c3511694731116f4d8773a50fbe6c787, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2659740375212002060}
   m_SourcePrefab: {fileID: 100100000, guid: c3511694731116f4d8773a50fbe6c787, type: 3}
 --- !u!1 &6262057716825487798 stripped
 GameObject:
@@ -124,13 +127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b09b7dc1938064ebbfb03527ea2614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingNPC
-  target: {fileID: 8588609066977709280, guid: 5d5d9042bc9a4714c9fa465c69e9b6ea, type: 3}
+  tagTarget: Player
   followSpeed: 3
   stopDistance: 2
   rotationSpeed: 5
-  floatHeight: 0.5
   floatAmplitude: 0.1
   floatFrequency: 1.5
+  floatHeightOffset: 1.5
   smoothTime: 0.3
 --- !u!114 &6414204732962907316
 MonoBehaviour:
@@ -147,5 +150,25 @@ MonoBehaviour:
   dialogueData: {fileID: 11400000, guid: 7706453f4d6f92345a92a9ef22bde05a, type: 2}
   dialoguePanel: {fileID: 0}
   dialogueText: {fileID: 0}
-  nameText: {fileID: 0}
-  portraitImage: {fileID: 0}
+--- !u!95 &2659740375212002060
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6262057716825487798}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b31629e9f8188424cadaadf42727e814, type: 3}
+  m_Controller: {fileID: 9100000, guid: 33600ae44a80c63439b14144ab85288c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

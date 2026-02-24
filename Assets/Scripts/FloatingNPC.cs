@@ -22,7 +22,7 @@ public class FloatingNPC : MonoBehaviour
         _target = GameObject.FindGameObjectWithTag(tagTarget).transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         HandleFollowing();
         HandleRotation();
