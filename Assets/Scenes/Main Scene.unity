@@ -25066,6 +25066,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 635920115873500664, guid: c8ef26a7c0df64e11b3cf79ee189723e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3257681246940794972, guid: c8ef26a7c0df64e11b3cf79ee189723e, type: 3}
       propertyPath: field of view
       value: 60.000004
