@@ -412,8 +412,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackRange: 10
-  attackCooldown: 3
-  tagTarget: Player
+  attackCooldown: 1.5
+  tagTarget: SonicPlayer
 --- !u!65 &974561760088656073
 BoxCollider:
   m_ObjectHideFlags: 0
