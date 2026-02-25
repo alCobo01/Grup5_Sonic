@@ -4,15 +4,22 @@ public class PlayerRingDrop : MonoBehaviour
 {
     [Header("Configuration")]
     [SerializeField] private GameObject ringPrefab;
-    [SerializeField] private int ringsToDrop = 10;
     [SerializeField] private float explosionForce = 5f;
     [SerializeField] private float upwardForce = 2f;
     [SerializeField] private Transform spawnPoint;
 
-    public void DropRingsOnHit()
+    [Header("Ring drop config")] 
+    [SerializeField] private float dropPercentage = 0.5f;
+    [SerializeField] private int maxRingsToDrop = 20;
+    [SerializeField] private int minRingsToDrop = 1;
+
+    public void DropRingsOnHit(int amount)
     {
+        var ringsToDrop = Mathf.RoundToInt(amount * dropPercentage);
+        ringsToDrop = Mathf.Clamp(ringsToDrop, minRingsToDrop, maxRingsToDrop);
+        
         var origin = spawnPoint.position;
-        for (int i = 0; i < ringsToDrop; i++)
+        for (var i = 0; i < ringsToDrop; i++)
         {
             SpawnSingleRing(origin);
         }
@@ -22,8 +29,11 @@ public class PlayerRingDrop : MonoBehaviour
     {
         var ring = Instantiate(ringPrefab, origin, Random.rotation);
         
+        // Ignore initial collision
         var ringCollider = ring.GetComponent<Collider>();
         var playerCollider = GetComponent<Collider>();
+        Physics.IgnoreCollision(ringCollider, playerCollider);
+        
         var rb = ring.GetComponent<Rigidbody>();
         
         var randomDir = Random.onUnitSphere;

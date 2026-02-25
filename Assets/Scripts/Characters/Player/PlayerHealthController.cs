@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.XR.Haptics;
 
 [RequireComponent(typeof(HealthBehaviour))]
+[RequireComponent(typeof(PlayerRingDrop))]
 public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 {
     public bool IsInvincible { get; set; }
@@ -19,10 +20,12 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     
     private int _currentShield, _currentRings;
     private HealthBehaviour _health;
+    private PlayerRingDrop _ringDrop;
 
     private void Awake()
     {
         _health = GetComponent<HealthBehaviour>();
+        _ringDrop = GetComponent<PlayerRingDrop>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -77,8 +80,6 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
                 StartCoroutine(InvincibilityCoroutine());
                 return;
             }
-            
-            damage -= _currentShield;
             _currentShield = 0;
         }
 
@@ -97,13 +98,14 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         }
         else
         {
+            _ringDrop.DropRingsOnHit(_currentRings);
             _currentRings = 0;
             OnRingsChanged?.Invoke(_currentRings);
             StartCoroutine(InvincibilityCoroutine());
         }
     }
 
-    private System.Collections.IEnumerator InvincibilityCoroutine()
+    private IEnumerator InvincibilityCoroutine()
     {
         IsInvincible = true;
         yield return new WaitForSeconds(invincibilityDuration);
