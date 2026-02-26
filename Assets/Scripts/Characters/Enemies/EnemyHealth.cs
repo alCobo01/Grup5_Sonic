@@ -5,7 +5,9 @@ using UnityEngine.Events;
 [RequireComponent(typeof(AnimationBehaviour))]
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
+    public static event UnityAction OnDeathStat;
     public event UnityAction OnDeath;
+    
     private static readonly int DieHash = Animator.StringToHash("Die");
     
     [SerializeField] private GameObject dieVFX;
@@ -42,6 +44,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         AudioManager.Instance.PlayEnemyDeath(transform);
         _animationBehaviour.Trigger(DieHash);
         OnDeath?.Invoke();
+        OnDeathStat?.Invoke();
         
         var instantiedVFX = Instantiate(dieVFX, transform.position, transform.rotation);
         Destroy(instantiedVFX, 2f);

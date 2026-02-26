@@ -8,7 +8,7 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
-    private static readonly int MeleeAttackHash = Animator.StringToHash("MeeleAttack");
+    private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
 
     [SerializeField] private Animator animator;
     [SerializeField] private float animSpeedMultiplier = 0.1f;
@@ -16,8 +16,7 @@ public class AnimationBehaviour : MonoBehaviour
     private Rigidbody _rigidbody;
     private PlayerGroundChecker _groundChecker;
     private PlayerMovementBehaviour _movement;
- 
-
+    
     private void Awake()
     {
         if (animator == null)

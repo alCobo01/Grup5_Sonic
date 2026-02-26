@@ -1,6 +1,5 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,6 +42,19 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    private void OnEnable()
+    {
+        BaseMenu.RestartCheckPoint += SetStartPoint;
+        PlayerHealthController.ReloadPlayer += HandleReloadPlayer;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealthController.ReloadPlayer -= HandleReloadPlayer;
+        BaseMenu.RestartCheckPoint -= SetStartPoint;
+    }
+    
+    
     public void LastCheckPoint(GameObject checkPoint)
     {
         for (var i = 0; i < checkPoints.Length; i++)
@@ -58,29 +70,21 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
     public void LoadPlayerOnCheckpoint(Vector3 spawnPosition, Transform cpTransform)
     {
         _player.transform.position = spawnPosition;
         _player.transform.rotation = cpTransform.rotation;
     }
+    
     public void LoadPlayerOnCheckpoint() { LoadPlayerOnCheckpoint(_lastSpawnPosition, _lastCheckpointTransform); }
+    
     public void SetStartPoint()
     {
         PlayerPrefs.SetInt("checkPointIndex", 0);
         _indexCheckPoints = 0;
     }
-    private void OnEnable()
-    {
-        BaseMenu.RestartCheckPoint += SetStartPoint;
-        PlayerHealthController.ReloadPlayer += HandleReloadPlayer;
-    }
-
-    private void OnDisable()
-    {
-        PlayerHealthController.ReloadPlayer -= HandleReloadPlayer;
-        BaseMenu.RestartCheckPoint -= SetStartPoint;
-    }
-
+    
     private void HandleReloadPlayer()
     {
         StartCoroutine(ReloadSequence());

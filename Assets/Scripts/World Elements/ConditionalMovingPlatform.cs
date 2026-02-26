@@ -14,7 +14,6 @@ public class ConditionalMovingPlatform : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
 
     private int _currentIndex = 0;
-    private int _direction = 1;
 
     private Vector3 _previousPosition;
     private PlayerPowerUpController _playerCache;
@@ -43,23 +42,23 @@ public class ConditionalMovingPlatform : MonoBehaviour
     private void FixedUpdate()
     {
         if (_hasReachedEnd) return;
-        // Solo se mueve si el jugador est encima Y tiene la llave
+        // Solo se mueve si el jugador está encima y tiene la llave
         if (!CanMove()) return;
         MoveTowardsTarget();
     }
 
     private bool CanMove()
     {
-        if (_playerCache == null)
+        if (_playerCache)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
-            if (playerObj != null)
+            var playerObj = GameObject.FindGameObjectWithTag(playerTag);
+            if (playerObj)
             {
                 _playerCache = playerObj.GetComponentInParent<PlayerPowerUpController>();
             }
         }
 
-        return _isPlayerOnPlatform && _playerCache != null && _playerCache.HasKey;
+        return _isPlayerOnPlatform && _playerCache && _playerCache.HasKey;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -102,14 +101,10 @@ public class ConditionalMovingPlatform : MonoBehaviour
         {
             transform.position += delta.normalized * stepSize;
         }
-
-        Vector3 platformDelta = transform.position - _previousPosition;
-
+        
         _previousPosition = transform.position;
     }
-
- 
-
+    
     private int GetNextIndex()
     {
         return Mathf.Clamp(_currentIndex + 1, 0, waypoints.Length - 1);
