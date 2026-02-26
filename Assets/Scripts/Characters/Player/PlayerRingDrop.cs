@@ -29,10 +29,16 @@ public class PlayerRingDrop : MonoBehaviour
     {
         var ring = Instantiate(ringPrefab, origin, Random.rotation);
         
-        // Ignore initial collision
-        var ringCollider = ring.GetComponent<Collider>();
-        var playerCollider = GetComponent<Collider>();
-        Physics.IgnoreCollision(ringCollider, playerCollider);
+        // Ignore collision between all ring colliders and all player colliders
+        var ringColliders = ring.GetComponents<Collider>();
+        var playerColliders = GetComponentsInChildren<Collider>();
+        foreach (var rc in ringColliders)
+        {
+            foreach (var pc in playerColliders)
+            {
+                Physics.IgnoreCollision(rc, pc, true);
+            }
+        }
         
         var rb = ring.GetComponent<Rigidbody>();
         
@@ -43,6 +49,5 @@ public class PlayerRingDrop : MonoBehaviour
         // Add explosive and rotation force (random turn)
         rb.AddForce(randomDir * explosionForce, ForceMode.Impulse);
         rb.AddTorque(Random.insideUnitSphere * explosionForce, ForceMode.Impulse);
-        
     }
 }

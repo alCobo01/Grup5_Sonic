@@ -33,6 +33,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     {
         if (_hasBroken) return;
         if (collectMode != PowerUpCollectMode.Touch) return;
+        if (!other.CompareTag("Player")) return;
         Collect(other.gameObject);
     }
 
@@ -40,6 +41,7 @@ public class PowerUpPickup : MonoBehaviour, IDamageable
     {
         if (_hasBroken) return;
         if (collectMode != PowerUpCollectMode.Touch) return;
+        if (!collision.gameObject.CompareTag("Player")) return;
         Collect(collision.gameObject);
     }
 

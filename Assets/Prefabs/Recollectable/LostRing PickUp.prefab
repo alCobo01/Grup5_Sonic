@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7457503202062761396}
   - component: {fileID: -7528939297077749905}
   - component: {fileID: -84061479012869936}
+  - component: {fileID: -6554785206558851408}
+  - component: {fileID: 2971473535464900915}
   m_Layer: 0
   m_Name: LostRing PickUp
   m_TagString: Untagged
@@ -180,3 +182,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-6554785206558851408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581119732072322913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e36945c257a49bc9011181a6e01eb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LostRing
+  lifeTime: 5
+  flickerDuration: 2
+  collectableDelay: 0.5
+--- !u!65 &2971473535464900915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581119732072322913}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.024999999, y: 0.035, z: 0.005}
+  m_Center: {x: 0, y: 0, z: 0}
