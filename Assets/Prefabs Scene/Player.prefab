@@ -717,7 +717,7 @@ MonoBehaviour:
   explosionForce: 3
   upwardForce: 2
   spawnPoint: {fileID: 5686280746697464243}
-  dropPercentage: 0.2
+  dropPercentage: 0.4
   maxRingsToDrop: 20
   minRingsToDrop: 1
 --- !u!1 &6238214410554624510
