@@ -12,7 +12,6 @@ public class KeyPickup : MonoBehaviour
         {
             AudioManager.Instance.PlayPickEmerald(player.transform);
             player.HasKey = true;
-            Debug.Log("[KeyPickup] Llave recogida! Plataformas condicionales activadas.");
             Destroy(gameObject);
         }
     }

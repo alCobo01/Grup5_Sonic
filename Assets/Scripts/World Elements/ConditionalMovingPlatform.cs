@@ -10,7 +10,6 @@ public class ConditionalMovingPlatform : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float speed = 3f;
 
-    [Tooltip("Tag del jugador para detectar la colisi�n")]
     [SerializeField] private string playerTag = "Player";
 
     private int _currentIndex = 0;
@@ -19,6 +18,10 @@ public class ConditionalMovingPlatform : MonoBehaviour
     private PlayerPowerUpController _playerCache;
     private bool _hasReachedEnd = false;
     private bool _isPlayerOnPlatform = false;
+    private bool _isActivated = false;
+
+    [Header("Activation Mode")]
+    [SerializeField] private bool moveOnceAndDone = true;
 
     private void Start()
     {
@@ -42,38 +45,63 @@ public class ConditionalMovingPlatform : MonoBehaviour
     private void FixedUpdate()
     {
         if (_hasReachedEnd) return;
-        // Solo se mueve si el jugador está encima y tiene la llave
-        if (!CanMove()) return;
-        MoveTowardsTarget();
+
+        if (_isActivated)
+        {
+            MoveTowardsTarget();
+            return;
+        }
+        if (_isPlayerOnPlatform && HasKeyCheck())
+        {
+            _isActivated = true;
+            MoveTowardsTarget();
+        }
     }
 
-    private bool CanMove()
+    private bool HasKeyCheck()
     {
-        if (_playerCache)
+        if (_playerCache == null)
         {
-            var playerObj = GameObject.FindGameObjectWithTag(playerTag);
-            if (playerObj)
+            GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
+            if (playerObj != null)
             {
                 _playerCache = playerObj.GetComponentInParent<PlayerPowerUpController>();
             }
         }
-
-        return _isPlayerOnPlatform && _playerCache && _playerCache.HasKey;
+        
+        return _playerCache != null && _playerCache.HasKey;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerTag))
-        {
-            _isPlayerOnPlatform = true;
-        }
+        CheckPlayerContact(other.gameObject, true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(playerTag))
+        CheckPlayerContact(other.gameObject, false);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        CheckPlayerContact(collision.gameObject, true);
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        CheckPlayerContact(collision.gameObject, false);
+    }
+
+    private void CheckPlayerContact(GameObject obj, bool isEntering)
+    {
+        if (obj.CompareTag(playerTag) || obj.GetComponentInParent<PlayerPowerUpController>() != null)
         {
-            _isPlayerOnPlatform = false;
+            _isPlayerOnPlatform = isEntering;
+               
+            if (isEntering && _playerCache == null)
+            {
+                _playerCache = obj.GetComponentInParent<PlayerPowerUpController>();
+            }
         }
     }
 
@@ -90,7 +118,6 @@ public class ConditionalMovingPlatform : MonoBehaviour
             if (_currentIndex >= waypoints.Length - 1)
             {
                 _hasReachedEnd = true;
-                Debug.Log($"[ConditionalMovingPlatform] {name}: Ha llegado al destino final.");
                 return;
             }
 
