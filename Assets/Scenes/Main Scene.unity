@@ -33179,15 +33179,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 851c4b0ce3b39014fb1d01cf94c4283d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -110.46
+      value: -110.415
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 851c4b0ce3b39014fb1d01cf94c4283d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 113.277
+      value: 113.294
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 851c4b0ce3b39014fb1d01cf94c4283d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -324.3764
+      value: -324.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 851c4b0ce3b39014fb1d01cf94c4283d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -93647,7 +93647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6692127585128300699, guid: 9f53961ae18070d48888d549d1ae4c69, type: 3}
       propertyPath: m_Name
-      value: LargeBloqueMovimiento
+      value: PuzzleBlock
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6145120651109652974, guid: 9f53961ae18070d48888d549d1ae4c69, type: 3}
@@ -93687,6 +93687,7 @@ MonoBehaviour:
   - {fileID: 1704394181}
   speed: 3
   playerTag: Player
+  moveOnceAndDone: 1
 --- !u!4 &1704394181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5384758296977454781, guid: 9f53961ae18070d48888d549d1ae4c69, type: 3}
@@ -93717,7 +93718,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.14529043, y: 0.13, z: 0.057052337}
-  m_Center: {x: -0.0029522888, y: -0.08, z: -0.00002752042}
+  m_Center: {x: -0.0029522888, y: -0.04, z: -0.00002752042}
 --- !u!65 &1704394188
 BoxCollider:
   m_ObjectHideFlags: 0
