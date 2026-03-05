@@ -36,6 +36,5 @@ public class RangeAttack : MonoBehaviour, IAttack
             if (bullet.TryGetComponent(out DamageProjectile projectile))
                 projectile.Configure(damageAmount, targetLayer, gameObject);
         }
-        
     }
 }
