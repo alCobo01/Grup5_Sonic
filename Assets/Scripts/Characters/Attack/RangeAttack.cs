@@ -27,7 +27,7 @@ public class RangeAttack : MonoBehaviour, IAttack
         
         if (bulletPrefab != null && firePoint != null)
         {
-            _animationBehaviour.TriggerMeleeAttack();
+            _animationBehaviour.TriggerRangeAttack();
             var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             var rb = bullet.GetComponent<Rigidbody>();
 
@@ -37,6 +37,5 @@ public class RangeAttack : MonoBehaviour, IAttack
             if (bullet.TryGetComponent(out DamageProjectile projectile))
                 projectile.Configure(damageAmount, targetLayer, gameObject);
         }
-        
     }
 }

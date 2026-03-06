@@ -10,7 +10,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     public bool IsInvincible { get; set; }
 
     [SerializeField] private float invincibilityDuration = 0.5f;
-    [SerializeField] private float knockbackForce =10f;
+    [SerializeField] private float knockbackForce = 10f;
     [SerializeField] private Rigidbody rb;
     
     public static event UnityAction OnDeath;

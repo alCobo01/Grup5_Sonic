@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class KeyPickup : MonoBehaviour
 {
-    
-
     private void OnTriggerEnter(Collider other)
     {
-        PlayerPowerUpController player = other.GetComponentInParent<PlayerPowerUpController>();
+        var player = other.GetComponentInParent<PlayerPowerUpController>();
 
         if (player != null)
         {
