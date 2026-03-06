@@ -8,6 +8,7 @@ public class AnimationBehaviour : MonoBehaviour
     private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int IsGroundedHash = Animator.StringToHash("IsGrounded");
     private static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
+    private static readonly int RangeAttackHash = Animator.StringToHash("RangeAttack");
     private static readonly int MeleeAttackHash = Animator.StringToHash("MeleeAttack");
 
     [SerializeField] private Animator animator;
@@ -65,6 +66,10 @@ public class AnimationBehaviour : MonoBehaviour
     public void TriggerJump()
     {
         if (animator != null) animator.SetTrigger(JumpHash);
+    }
+    public void TriggerRangeAttack()
+    {
+        if (animator != null) animator.SetTrigger(RangeAttackHash);
     }
 
     public void SetGrounded(bool isGrounded)
