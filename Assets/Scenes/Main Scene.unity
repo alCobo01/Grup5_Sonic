@@ -12391,7 +12391,11 @@ PrefabInstance:
       value: LargeRamp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6483987550005811166, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
+    - {fileID: 7833693860398463026, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
+    - {fileID: 3726066641270585381, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
+    - {fileID: 2303952810764163068, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
@@ -96886,6 +96890,14 @@ PrefabInstance:
       propertyPath: dialoguePanel
       value: 
       objectReference: {fileID: 1643770577}
+    - target: {fileID: 4965126297840211655, guid: 81a980b2e755d4a9bbba48188e0dd70b, type: 3}
+      propertyPath: dialogueWithGem
+      value: 
+      objectReference: {fileID: 11400000, guid: d6d73f235c2ff4f86917d6551e29b815, type: 2}
+    - target: {fileID: 4965126297840211655, guid: 81a980b2e755d4a9bbba48188e0dd70b, type: 3}
+      propertyPath: dialogueWithoutGem
+      value: 
+      objectReference: {fileID: 11400000, guid: 8c5a6eeaa3c222d4eabfb5c6b99b223a, type: 2}
     - target: {fileID: 5273598519013291492, guid: 81a980b2e755d4a9bbba48188e0dd70b, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -127978,7 +127990,11 @@ PrefabInstance:
       value: RampaGrande
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2303952810764163068, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
+    - {fileID: 6483987550005811166, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
+    - {fileID: 7833693860398463026, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
+    - {fileID: 3726066641270585381, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bc2136554f0794c9d8710f1835ac76, type: 3}
