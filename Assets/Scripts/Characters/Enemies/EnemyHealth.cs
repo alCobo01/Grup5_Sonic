@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 {
     public static event UnityAction OnDeathStat;
     public event UnityAction OnDeath;
+    public event UnityAction OnDamaged;
     
     private static readonly int DieHash = Animator.StringToHash("Die");
     
@@ -24,6 +25,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        OnDamaged?.Invoke();
+        
         if (_health.IsDead) return;
 
         damage = Mathf.Abs(damage);
@@ -39,7 +42,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         Die();
     }
     
-    private void Die()
+    public void Die()
     {
         AudioManager.Instance.PlayEnemyDeath(transform);
         _animationBehaviour.Trigger(DieHash);
