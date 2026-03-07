@@ -7,12 +7,12 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BridgeLayer
-  m_DiffuseTexture: {fileID: 2800000, guid: bf488349e825e4c10b266d697c52fa30, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: e41e48217b35a4e7597fcdcbb3810e90, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: 7dd2d50be1dd71e48b185edcf860c413, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: 1ddfa4171919918409edecc4cc7f4dba, type: 3}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 2, y: 2}
+  m_TileSize: {x: 4, y: 4}
   m_TileOffset: {x: 0, y: 0}
-  m_Specular: {r: 0, g: 0, b: 0, a: 0}
+  m_Specular: {r: 0.9339623, g: 0.18062477, b: 0.18062477, a: 0}
   m_Metallic: 1
   m_Smoothness: 0
   m_NormalScale: 1
