@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour
     private static readonly int ChaseHash = Animator.StringToHash("Chase");
 
     [SerializeField] private string tagTarget = "Player";
-    [SerializeField] private float detectionRadius = 10f;
+    [SerializeField] public float detectionRadius = 10f;
     
     private NavMeshAgent _agent;
     private AnimationBehaviour _animationBehaviour;

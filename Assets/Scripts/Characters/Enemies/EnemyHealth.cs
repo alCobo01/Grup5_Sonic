@@ -23,9 +23,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         _health = GetComponent<HealthBehaviour>();
     }
 
+    public bool IsInvulnerable { get; set; }
+    
     public void TakeDamage(int damage)
     {
-        OnDamaged?.Invoke();
+        if (IsInvulnerable) return;
         
         if (_health.IsDead) return;
 
@@ -33,6 +35,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (damage == 0) return;
 
         for (var i = 0; i < damage; i++) _health.LoseLife();
+        
+        OnDamaged?.Invoke();
+        
         if (_health.CurrentLives <= 0) Die();
     }
 
