@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,11 @@ public class AudioManager : MonoBehaviour
     public SoundEffect[] soundEffects;
 
     [Header("Background Music")]
-    public AudioClip backgroundMusic;
+    [Tooltip("Lista de pistas de música. El índice 0 se reproduce al arrancar.")]
+    public AudioClip[] backgroundMusics;
+
+    [Tooltip("Si está activado, al llamar NextMusic() vuelve al índice 0 al llegar al final.")]
+    public bool loopPlaylist = true;
 
     [System.Serializable]
     public class SoundEffect
@@ -33,6 +38,9 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource musicSource;
     private Dictionary<string, SoundEffect> sfxDict = new Dictionary<string, SoundEffect>();
+
+    // Índice de la pista actual en backgroundMusics
+    private int currentMusicIndex = -1;
 
     void Awake()
     {
@@ -50,9 +58,66 @@ public class AudioManager : MonoBehaviour
             if (!string.IsNullOrEmpty(sfx.name))
                 sfxDict[sfx.name] = sfx;
 
-        if (backgroundMusic != null)
-            PlayMusic(backgroundMusic);
+        if (backgroundMusics != null && backgroundMusics.Length > 0)
+            PlayMusicByIndex(0);
     }
+
+    // ──────────────────────────────────────────
+    //  PLAYLIST METHODS
+    // ──────────────────────────────────────────
+
+    /// <summary>Reproduce la pista en la posición indicada del array.</summary>
+    public void PlayMusicByIndex(int index)
+    {
+        if (backgroundMusics == null || backgroundMusics.Length == 0) return;
+        index = Mathf.Clamp(index, 0, backgroundMusics.Length - 1);
+        currentMusicIndex = index;
+        PlayMusic(backgroundMusics[currentMusicIndex]);
+    }
+
+    public void NextMusic()
+    {
+        if (backgroundMusics == null || backgroundMusics.Length == 0) return;
+
+        int next = currentMusicIndex + 1;
+        if (next >= backgroundMusics.Length)
+        {
+            Debug.Log("[AudioManager] Ya estás en la última pista.");
+            return;
+        }
+
+        PlayMusicByIndex(next);
+    }
+
+    public void PreviousMusic()
+    {
+        if (backgroundMusics == null || backgroundMusics.Length == 0) return;
+
+        int prev = currentMusicIndex - 1;
+        if (prev < 0)
+        {
+            Debug.Log("[AudioManager] Ya estás en la primera pista.");
+            return;
+        }
+
+        PlayMusicByIndex(prev);
+    }
+
+    /// <summary>Alterna directamente entre dos índices (útil para combat/exploration music, etc.).</summary>
+    public void ToggleMusic(int indexA, int indexB)
+    {
+        if (currentMusicIndex == indexA)
+            PlayMusicByIndex(indexB);
+        else
+            PlayMusicByIndex(indexA);
+    }
+
+    /// <summary>Devuelve el índice de la pista que está sonando actualmente.</summary>
+    public int CurrentMusicIndex => currentMusicIndex;
+
+    // ──────────────────────────────────────────
+    //  SFX
+    // ──────────────────────────────────────────
 
     public void PlaySFX(string sfxName, Transform spawnTransform)
     {
@@ -68,30 +133,20 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Spawn gameobject desde prefab o uno básico
         AudioSource audioSource = soundFXObject != null
             ? Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity)
             : new GameObject($"SFX_{sfx.clip.name}").AddComponent<AudioSource>();
 
         audioSource.transform.position = spawnTransform.position;
         audioSource.transform.SetParent(null);
-
-        // Set clip
         audioSource.clip = sfx.clip;
-        // Set volume
         audioSource.volume = sfx.volume * sfxVolume;
-        // Set pitch
         audioSource.pitch = sfx.pitch;
-        // 2D - se escucha igual desde cualquier distancia
         audioSource.spatialBlend = 0f;
         audioSource.playOnAwake = false;
-
-        // Play sound
         audioSource.Play();
 
-        // Destroy gameobject after clip length
-        float clipLength = audioSource.clip.length;
-        Destroy(audioSource.gameObject, clipLength);
+        Destroy(audioSource.gameObject, audioSource.clip.length);
     }
 
     public void PlayAccelerator(Transform t) => PlaySFX("Accelerator", t);
@@ -109,6 +164,11 @@ public class AudioManager : MonoBehaviour
     public void PlayPowerUp(Transform t) => PlaySFX("PowerUp", t);
     public void PlayTrampolines(Transform t) => PlaySFX("Trampolines", t);
     public void PlayWalking(Transform t) => PlaySFX("Walking", t);
+    public void PlayEggmanLaugh(Transform t) => PlaySFX("EggmanLaugh", t);
+
+    // ──────────────────────────────────────────
+    //  MUSIC CORE
+    // ──────────────────────────────────────────
 
     public void PlayMusic(AudioClip clip)
     {
@@ -128,4 +188,22 @@ public class AudioManager : MonoBehaviour
     }
 
     public void SetSFXVolume(float value) => sfxVolume = Mathf.Clamp01(value);
+
+    public void PlayWinSequence(Transform t, string sfxName = "PowerUp")
+    {
+        StartCoroutine(WinSequenceRoutine(t, sfxName));
+    }
+
+    private IEnumerator WinSequenceRoutine(Transform t, string sfxName)
+    {
+        StopMusic();
+
+        if (sfxDict.TryGetValue(sfxName, out SoundEffect sfx) && sfx.clip != null)
+        {
+            PlaySFX(sfxName, t);
+            yield return new WaitForSeconds(sfx.clip.length);
+        }
+
+        PlayMusicByIndex(2);
+    }
 }

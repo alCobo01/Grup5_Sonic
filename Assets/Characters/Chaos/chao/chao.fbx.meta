@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: b31629e9f8188424cadaadf42727e814
+guid: d2eac439d2da6a74aa643cabf68c4eec
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 5995249bc1293a944907882fa6203a1d, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: BodyColor
+    second: {fileID: 2800000, guid: d071b9d8cd7dc2346abab257af14ad93, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -43,7 +53,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -71,7 +81,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

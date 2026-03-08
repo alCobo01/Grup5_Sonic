@@ -1,39 +1,40 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.XR.Haptics;
 
 [RequireComponent(typeof(HealthBehaviour))]
+[RequireComponent(typeof(PlayerRingDrop))]
 public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 {
+    public bool IsInvincible { get; set; }
 
+    [SerializeField] private float invincibilityDuration = 0.5f;
+    [SerializeField] private float knockbackForce = 10f;
+    [SerializeField] private Rigidbody rb;
+    
     public static event UnityAction OnDeath;
     public static event UnityAction<int> OnRingsChanged;
     public static event UnityAction<int> OnLivesChanged;
-    public static event UnityAction OnLifeLost;
+    public static event UnityAction OnShieldBroken;
     public static event Action ReloadPlayer = delegate { };
-
-    public float knockbackForce =10f;
-    public Rigidbody _rb;
-    [SerializeField] private float invincibilityDuration = 0.5f;
-    public bool IsInvincible { get; set; }
-    public int CurrentRings { get; private set; }
-    public int CurrentLives => _health != null ? _health.CurrentLives : 0;
-
-    private int _currentShield;
+    
+    private int _currentShield, _currentRings;
     private HealthBehaviour _health;
+    private PlayerRingDrop _ringDrop;
 
     private void Awake()
     {
         _health = GetComponent<HealthBehaviour>();
-        _rb = GetComponent<Rigidbody>();
+        _ringDrop = GetComponent<PlayerRingDrop>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
         //Update stats for not starting on 0 on UI
-        OnRingsChanged?.Invoke(CurrentRings);
-        OnLivesChanged?.Invoke(CurrentLives);
+        OnRingsChanged?.Invoke(_currentRings);
+        OnLivesChanged?.Invoke(_health.CurrentLives);
     }
 
     // Modify shield methods
@@ -45,17 +46,17 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     {
         if (_health.IsDead) return;
         if (amount == 0) return;
-        CurrentRings = Mathf.Max(0, CurrentRings + amount);
-        OnRingsChanged?.Invoke(CurrentRings);
+        _currentRings = Mathf.Max(0, _currentRings + amount);
+        OnRingsChanged?.Invoke(_currentRings);
     }
 
     public bool TrySpendRing()
     {
         if (_health.IsDead) return false;
-        if (CurrentRings < 1) return false;
+        if (_currentRings < 1) return false;
 
-        CurrentRings -= 1;
-        OnRingsChanged?.Invoke(CurrentRings);
+        _currentRings -= 1;
+        OnRingsChanged?.Invoke(_currentRings);
         return true;
     }
 
@@ -80,33 +81,38 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
                 StartCoroutine(InvincibilityCoroutine());
                 return;
             }
-            
-            damage -= _currentShield;
             _currentShield = 0;
+            OnShieldBroken?.Invoke();
         }
 
         //Knockback
-        _rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
-        
+        rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
+
         // If rings reach 0, lose a life
-        if (CurrentRings <= 0)
+        if (_currentRings <= 0)
         {
             _health.LoseLife();
             OnLivesChanged?.Invoke(_health.CurrentLives);
-            ReloadPlayer.Invoke();
 
-            if (_health.IsDead) OnDeath?.Invoke();
-            else OnLifeLost?.Invoke();
+            if (_health.IsDead)
+            {
+                OnDeath?.Invoke();
+                AudioManager.Instance.PlayMusicByIndex(3);
+            }
+            else
+                ReloadPlayer.Invoke();
         }
         else
         {
-            CurrentRings = 0;
-            OnRingsChanged?.Invoke(CurrentRings);
+            _ringDrop.DropRingsOnHit(_currentRings);
+            _currentRings = 0;
+            AudioManager.Instance.PlayLoseRings(transform);
+            OnRingsChanged?.Invoke(_currentRings);
             StartCoroutine(InvincibilityCoroutine());
         }
     }
 
-    private System.Collections.IEnumerator InvincibilityCoroutine()
+    private IEnumerator InvincibilityCoroutine()
     {
         IsInvincible = true;
         yield return new WaitForSeconds(invincibilityDuration);
@@ -119,6 +125,5 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
         OnLivesChanged?.Invoke(_health.CurrentLives);
 
         if (_health.IsDead) OnDeath?.Invoke();
-        else OnLifeLost?.Invoke();
     }
 }

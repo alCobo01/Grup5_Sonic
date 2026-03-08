@@ -8,7 +8,8 @@ public class EnemyAI : MonoBehaviour
     private static readonly int ChaseHash = Animator.StringToHash("Chase");
 
     [SerializeField] private string tagTarget = "Player";
-    [SerializeField] private float detectionRadius = 10f;
+    [SerializeField] public float detectionRadius = 10f;
+    [SerializeField] private float chaseStopBuffer = 0.25f;
     
     private NavMeshAgent _agent;
     private AnimationBehaviour _animationBehaviour;
@@ -40,8 +41,9 @@ public class EnemyAI : MonoBehaviour
         {
             _agent.isStopped = false;
             _agent.SetDestination(_target.position);
-            
-            _animationBehaviour.SetBool(ChaseHash, _agent.velocity.magnitude > 0.1f);
+
+            var shouldChase = distance > _agent.stoppingDistance + chaseStopBuffer;
+            _animationBehaviour.SetBool(ChaseHash, shouldChase);
         }
         else
         {

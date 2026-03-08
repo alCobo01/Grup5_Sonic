@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 6858343062130199631}
   - component: {fileID: 1751018175054869596}
   - component: {fileID: -44545436096039276}
+  - component: {fileID: 1195134145915084516}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -380,6 +381,7 @@ Transform:
   - {fileID: 2803942477124310053}
   - {fileID: 9015148576119439157}
   - {fileID: 9009803828191109950}
+  - {fileID: 5686280746697464243}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -130.122, z: 0}
 --- !u!33 &7131703032713052756
@@ -499,6 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f735bbb5ff8f64cb99f399e600c1a93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
+  _jumpClip: {fileID: 0}
 --- !u!114 &3965890011369993568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,9 +606,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f160bad13fb482a92ed2a1636b04294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthController
-  knockbackForce: 10
-  _rb: {fileID: 0}
   invincibilityDuration: 0.5
+  knockbackForce: 10
+  rb: {fileID: 0}
 --- !u!114 &4753078854763515090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,6 +701,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPowerUpController
   shieldVFX: {fileID: 4518141871926318113}
+--- !u!114 &1195134145915084516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994571563331843826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8201776f9ac43d8a15c458fc1ba0a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRingDrop
+  ringPrefab: {fileID: 5581119732072322913, guid: f538b43301463418e8d9a98ee54a79d1, type: 3}
+  explosionForce: 3
+  upwardForce: 2
+  spawnPoint: {fileID: 5686280746697464243}
+  dropPercentage: 0.4
+  maxRingsToDrop: 20
+  minRingsToDrop: 1
+--- !u!1 &6238214410554624510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5686280746697464243}
+  m_Layer: 7
+  m_Name: RingDrop Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5686280746697464243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6238214410554624510}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.837, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5341585931858956357}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6642647518954257319
 GameObject:
   m_ObjectHideFlags: 0

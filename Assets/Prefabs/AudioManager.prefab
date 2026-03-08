@@ -101,4 +101,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6f7a37d71383bfe4fa65eb1408b27ba3, type: 3}
     volume: 1
     pitch: 0.5
-  backgroundMusic: {fileID: 8300000, guid: 61962f1e227542142969389ea8962d62, type: 3}
+  - name: WinSoundEffect
+    clip: {fileID: 8300000, guid: 00061a0f3b19f154f98f3597ebaccef3, type: 3}
+    volume: 1
+    pitch: 0.5
+  backgroundMusics:
+  - {fileID: 8300000, guid: 61962f1e227542142969389ea8962d62, type: 3}
+  - {fileID: 8300000, guid: fa994e2166fd3b24081b4270abaf8429, type: 3}
+  - {fileID: 8300000, guid: 1b3e037a619d686418dbb6c37b0d4c72, type: 3}
+  loopPlaylist: 1

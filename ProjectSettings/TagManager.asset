@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - SonicPlayer
   layers:
   - Default
   - TransparentFX
@@ -17,9 +18,9 @@ TagManager:
   - Ground
   - Enemy
   - ShieldVFX
-  - 
-  - 
-  - 
+  - EnemyBullet
+  - Fences
+  - WorldProps
   - 
   - 
   - 

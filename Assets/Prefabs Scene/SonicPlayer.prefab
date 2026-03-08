@@ -3048,7 +3048,7 @@ GameObject:
   - component: {fileID: 8043997566344611961}
   m_Layer: 0
   m_Name: SonicPlayer
-  m_TagString: Untagged
+  m_TagString: SonicPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
