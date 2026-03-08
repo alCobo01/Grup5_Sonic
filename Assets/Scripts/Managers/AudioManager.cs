@@ -164,6 +164,7 @@ public class AudioManager : MonoBehaviour
     public void PlayPowerUp(Transform t) => PlaySFX("PowerUp", t);
     public void PlayTrampolines(Transform t) => PlaySFX("Trampolines", t);
     public void PlayWalking(Transform t) => PlaySFX("Walking", t);
+    public void PlayEggmanLaugh(Transform t) => PlaySFX("EggmanLaugh", t);
 
     // ──────────────────────────────────────────
     //  MUSIC CORE

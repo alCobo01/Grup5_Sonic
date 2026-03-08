@@ -16,6 +16,7 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
     public static event UnityAction OnDeath;
     public static event UnityAction<int> OnRingsChanged;
     public static event UnityAction<int> OnLivesChanged;
+    public static event UnityAction OnShieldBroken;
     public static event Action ReloadPlayer = delegate { };
     
     private int _currentShield, _currentRings;
@@ -81,25 +82,31 @@ public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
                 return;
             }
             _currentShield = 0;
+            OnShieldBroken?.Invoke();
         }
 
         //Knockback
         rb.AddForce(-transform.forward * knockbackForce, ForceMode.VelocityChange);
 
         // If rings reach 0, lose a life
-        AudioManager.Instance.PlayLoseRings(transform);
         if (_currentRings <= 0)
         {
             _health.LoseLife();
             OnLivesChanged?.Invoke(_health.CurrentLives);
-            ReloadPlayer.Invoke();
 
-            if (_health.IsDead) OnDeath?.Invoke();
+            if (_health.IsDead)
+            {
+                OnDeath?.Invoke();
+                AudioManager.Instance.PlayMusicByIndex(3);
+            }
+            else
+                ReloadPlayer.Invoke();
         }
         else
         {
             _ringDrop.DropRingsOnHit(_currentRings);
             _currentRings = 0;
+            AudioManager.Instance.PlayLoseRings(transform);
             OnRingsChanged?.Invoke(_currentRings);
             StartCoroutine(InvincibilityCoroutine());
         }

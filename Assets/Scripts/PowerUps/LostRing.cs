@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LostRing : MonoBehaviour
 {
-    [SerializeField] private float lifeTime = 5f;
+    [SerializeField] public float lifeTime = 5f;
     [SerializeField] private float flickerDuration = 2f;
     [SerializeField] private float collectableDelay = 0.5f;
 
