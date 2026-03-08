@@ -107,6 +107,7 @@ public class BossBattle : MonoBehaviour
     private void OnDestroy()
     {
         BossBatlleTrigger.OnPlayerEnterTrigger -= HandleStartBattle;
+        AudioManager.Instance.PlayEnemyDeath(transform);
         
         eggmanHealthController.OnDamaged -= HandleDamage;
         eggmanHealthController.OnDeath -= HandleDeath;
@@ -216,9 +217,12 @@ public class BossBattle : MonoBehaviour
     
     private void SpawnEnemies(int amount)
     {
+        var shuffled = new List<Vector3>(_spawnPointsPositions);
+        ShuffleList(shuffled);
+        
         for (var i = 0; i < amount; i++)
         {
-            var position = _spawnPointsPositions[Random.Range(0, _spawnPointsPositions.Count)];
+            var position = shuffled[i % shuffled.Count];
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
         
             if (enemy.TryGetComponent<EnemyHealth>(out var enemyHealth)) _spawnedEnemies.Add(enemyHealth);
@@ -282,6 +286,15 @@ public class BossBattle : MonoBehaviour
         if (Physics.Raycast(origin, Vector3.down, out var hit, 50f, LayerMask.GetMask("Ground")))
         {
             Instantiate(cartelPrefab, hit.point, Quaternion.Euler(-90, 0, 0));
+        }
+    }
+    
+    private static void ShuffleList<T>(List<T> list)
+    {
+        for (var i = list.Count - 1; i > 0; i--)
+        {
+            var j = Random.Range(0, i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
         }
     }
 }
