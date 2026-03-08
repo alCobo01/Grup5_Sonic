@@ -16,6 +16,7 @@ public class EnemyRangedAttack : MonoBehaviour
     private WaitForSeconds _cooldownWait;
     private Transform _target;
     private EnemyHealth _enemyHealth;
+    private AnimationBehaviour _animationBehaviour;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class EnemyRangedAttack : MonoBehaviour
         _attackRangeSqr = attackRange * attackRange;
         _cooldownWait = new WaitForSeconds(attackCooldown);
         _enemyHealth = GetComponent<EnemyHealth>();
+        _animationBehaviour = GetComponent<AnimationBehaviour>();
     }
 
     private void Start() => _target = GameObject.FindGameObjectWithTag(tagTarget).transform;
@@ -69,6 +71,7 @@ public class EnemyRangedAttack : MonoBehaviour
     private void Shoot()
     {
         AudioManager.Instance.PlayEnemyShot(transform);
+        _animationBehaviour.Trigger(Animator.StringToHash("Attack"));
         var direction = (_target.position - firePoint.position).normalized;
         var proj = Instantiate(projectilePrefab, firePoint.position, 
             Quaternion.LookRotation(direction));

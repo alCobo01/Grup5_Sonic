@@ -19,6 +19,7 @@ public class BossHealthBarUI : MonoBehaviour
         BossBattle.OnBattleEnded += HandleBattleEnded;
         BossBattle.OnBossHealthChanged += HandleHealthChanged;
         BossBattle.OnStageChanged += HandleStageChanged;
+        PlayerHealthController.OnDeath += HandleGameOver;
     }
 
     private void OnDisable()
@@ -27,6 +28,7 @@ public class BossHealthBarUI : MonoBehaviour
         BossBattle.OnBattleEnded -= HandleBattleEnded;
         BossBattle.OnBossHealthChanged -= HandleHealthChanged;
         BossBattle.OnStageChanged -= HandleStageChanged;
+        PlayerHealthController.OnDeath -= HandleGameOver;
     }
 
     private void Start()
@@ -40,6 +42,11 @@ public class BossHealthBarUI : MonoBehaviour
     }
 
     private void HandleBattleEnded()
+    {
+        container.SetActive(false);
+    }
+
+    private void HandleGameOver()
     {
         container.SetActive(false);
     }

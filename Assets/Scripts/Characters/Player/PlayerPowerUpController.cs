@@ -9,6 +9,7 @@ public class PlayerPowerUpController : MonoBehaviour
     private PlayerHealthController _healthController;
     //public bool HasKey { get; set; }
     public bool HasKey = true;
+    private Coroutine _shieldCoroutine;
 
     private void Awake()
     {
@@ -17,7 +18,17 @@ public class PlayerPowerUpController : MonoBehaviour
         {
             _healthController = healthController;
         }
-    } 
+    }
+
+    private void OnEnable()
+    {
+        PlayerHealthController.OnShieldBroken += HandleShieldBroken;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealthController.OnShieldBroken -= HandleShieldBroken;
+    }
     
     public void ActivatePowerUp(PowerUp powerUp)
     {
@@ -30,7 +41,8 @@ public class PlayerPowerUpController : MonoBehaviour
                 _healthController.AddRings(powerUp.amount);
                 break;
             case PowerUpType.Shield:
-                StartCoroutine(ShieldRoutine(powerUp.amount, powerUp.duration));
+                if (_shieldCoroutine != null) StopCoroutine(_shieldCoroutine);
+                _shieldCoroutine = StartCoroutine(ShieldRoutine(powerUp.amount, powerUp.duration));
                 break;
             case PowerUpType.Invincibility:
                 StartCoroutine(InvincibilityRoutine(powerUp.duration));
@@ -48,6 +60,17 @@ public class PlayerPowerUpController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         shieldVFX.SetActive(false);
         _healthController.RemoveShield(amount);
+        _shieldCoroutine = null;
+    }
+
+    private void HandleShieldBroken()
+    {
+        if (_shieldCoroutine != null)
+        {
+            StopCoroutine(_shieldCoroutine);
+            _shieldCoroutine = null;
+        }
+        shieldVFX.SetActive(false);
     }
 
     private IEnumerator InvincibilityRoutine(float duration)

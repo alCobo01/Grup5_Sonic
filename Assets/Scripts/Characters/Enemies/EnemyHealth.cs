@@ -17,6 +17,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private AnimationBehaviour _animationBehaviour;
     private HealthBehaviour _health;
 
+    public bool IsDying { get; private set; }
+
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
@@ -28,7 +30,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         if (IsInvulnerable) return;
-        
         if (_health.IsDead) return;
 
         damage = Mathf.Abs(damage);
@@ -49,6 +50,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     
     public void Die()
     {
+        if (IsDying) return;
+        IsDying = true;
+        
         AudioManager.Instance.PlayEnemyDeath(transform);
         _animationBehaviour.Trigger(DieHash);
         OnDeath?.Invoke();

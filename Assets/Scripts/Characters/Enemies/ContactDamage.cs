@@ -8,9 +8,14 @@ public class ContactDamage : MonoBehaviour
     [SerializeField] private LayerMask targetLayer;
 
     private AnimationBehaviour _animationBehaviour;
+    private EnemyHealth _enemyHealth;
     private float _elapsedTime;
 
-    private void Awake() => _animationBehaviour = GetComponent<AnimationBehaviour>();
+    private void Awake()
+    {
+        _animationBehaviour = GetComponent<AnimationBehaviour>();
+        _enemyHealth = GetComponent<EnemyHealth>();
+    }
     private void Update() => _elapsedTime += Time.deltaTime;
 
     private void OnTriggerEnter(Collider other) => TryDealDamage(other.gameObject);
@@ -18,6 +23,7 @@ public class ContactDamage : MonoBehaviour
 
     private void TryDealDamage(GameObject target)
     {
+        if (_enemyHealth != null && _enemyHealth.IsDying) return;
         if (((1 << target.layer) & targetLayer) == 0) return;
         if (_elapsedTime < attackCooldown) return;
         

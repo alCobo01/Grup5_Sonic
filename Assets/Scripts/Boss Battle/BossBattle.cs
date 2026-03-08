@@ -40,8 +40,17 @@ public class BossBattle : MonoBehaviour
     [Header("Prefabs")] 
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject ringPrefab;
+    [SerializeField] private GameObject cartelPrefab;
 
     private const float StageTransitionDuration = 2f;
+
+    [Header("Invincibility Cooldown")]
+    [SerializeField] private float invincibilityCooldown = 1.5f;
+    
+    [Header("Death Flicker")]
+    [SerializeField] private float flickerDuration = 3f;
+    [SerializeField] private float flickerStartSpeed = 0.2f;
+    [SerializeField] private float flickerEndSpeed = 0.05f;
     
     private readonly List<Vector3> _spawnPointsPositions = new();
     private readonly List<EnemyHealth> _spawnedEnemies = new();
@@ -53,6 +62,7 @@ public class BossBattle : MonoBehaviour
     private bool _battleStarted;
     private bool _isTransitioning;
     private int _maxLives;
+    private float _invincibilityTimer;
 
     private void Awake()
     { 
@@ -78,7 +88,18 @@ public class BossBattle : MonoBehaviour
 
     private void Update()
     {
-        if (!_battleStarted || _isTransitioning) return;
+        if (!_battleStarted) return;
+        
+        if (_invincibilityTimer > 0f)
+        {
+            _invincibilityTimer -= Time.deltaTime;
+            if (_invincibilityTimer <= 0f && !_isTransitioning)
+            {
+                eggmanHealthController.IsInvulnerable = false;
+            }
+        }
+        
+        if (_isTransitioning) return;
         
         _agent.SetDestination(_target.position);
     }
@@ -103,11 +124,14 @@ public class BossBattle : MonoBehaviour
         {
             case Stage.Stage1 when currentLives <= stage2StartLives:
                 StartCoroutine(TransitionToNextStage(stage2RingAmount));
-                break;
+                return;
             case Stage.Stage2 when currentLives <= stage3StartLives:
                 StartCoroutine(TransitionToNextStage(stage3RingAmount));
-                break;
+                return;
         }
+        
+        eggmanHealthController.IsInvulnerable = true;
+        _invincibilityTimer = invincibilityCooldown;
     }
     
     private void HandleStartBattle()
@@ -125,23 +149,53 @@ public class BossBattle : MonoBehaviour
         DestroyAllEnemies();
         OnBossHealthChanged?.Invoke(0, _maxLives);
         OnBattleEnded?.Invoke();
+        
+        StartCoroutine(DeathFlickerRoutine());
     }
     #endregion
 
+    private IEnumerator DeathFlickerRoutine()
+    {
+        var renderers = eggmanHealthController.GetComponentsInChildren<Renderer>();
+        var elapsed = 0f;
+        
+        while (elapsed < flickerDuration)
+        {
+            var t = elapsed / flickerDuration;
+            var flickerSpeed = Mathf.Lerp(flickerStartSpeed, flickerEndSpeed, t);
+            
+            foreach (var r in renderers) r.enabled = !r.enabled;
+            
+            yield return new WaitForSeconds(flickerSpeed);
+            elapsed += flickerSpeed;
+        }
+        
+        SpawnCartelOnTerrain();
+        Destroy(eggmanHealthController.gameObject);
+    }
+
     private void StartBattle()
     {
-        _battleStarted = true;
-        StartNextStage();
+        _animationBehaviour.Trigger(LaughHash);
+        AudioManager.Instance.PlayEggmanLaugh(transform);
         
         OnBattleStarted?.Invoke();
         OnBossHealthChanged?.Invoke(_eggmanHealth.CurrentLives, _maxLives);
-        
-        _animationBehaviour.Trigger(LaughHash);
+
+        StartCoroutine(WaitForStarting());
     }
 
+    private IEnumerator WaitForStarting()
+    {
+        yield return new WaitForSeconds(3.3f);
+        StartNextStage();
+        _battleStarted = true;
+    }
+    
     private IEnumerator TransitionToNextStage(int ringAmount)
     {
         _isTransitioning = true;
+        _invincibilityTimer = 0f;
         
         _agent.isStopped = true;
         _agent.ResetPath();
@@ -213,7 +267,21 @@ public class BossBattle : MonoBehaviour
 
     private void DestroyAllEnemies()
     {
-        _spawnedEnemies.ForEach(e => e.Die());
+        for (var i = _spawnedEnemies.Count - 1; i >= 0; i--)
+        {
+            var enemy = _spawnedEnemies[i];
+            if (enemy != null && enemy.gameObject != null) enemy.Die();
+        }
         _spawnedEnemies.Clear();
+    }
+
+    private void SpawnCartelOnTerrain()
+    {
+        var origin = transform.position + Vector3.up * 10f;
+        
+        if (Physics.Raycast(origin, Vector3.down, out var hit, 50f, LayerMask.GetMask("Ground")))
+        {
+            Instantiate(cartelPrefab, hit.point, Quaternion.Euler(-90, 0, 0));
+        }
     }
 }

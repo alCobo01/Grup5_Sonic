@@ -13,12 +13,14 @@ public class RangeAttack : MonoBehaviour, IAttack
 
     private AnimationBehaviour _animationBehaviour;
     private IRingWallet _ringWallet;
+    private Rigidbody _ownerRb;
 
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
         if (firePoint == null) firePoint = transform;
         _ringWallet = GetComponentInParent<IRingWallet>();
+        _ownerRb = GetComponentInParent<Rigidbody>();
     }
 
     public void Attack()
@@ -28,12 +30,11 @@ public class RangeAttack : MonoBehaviour, IAttack
         if (bulletPrefab != null && firePoint != null)
         {
             _animationBehaviour.TriggerRangeAttack();
+            
             var bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             var rb = bullet.GetComponent<Rigidbody>();
-
-            if (rb != null)
-                rb.linearVelocity = firePoint.forward * bulletSpeed;
-
+            rb.linearVelocity = firePoint.forward * bulletSpeed + _ownerRb.linearVelocity;
+            
             if (bullet.TryGetComponent(out DamageProjectile projectile))
                 projectile.Configure(damageAmount, targetLayer, gameObject);
         }

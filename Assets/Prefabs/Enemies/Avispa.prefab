@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   tagTarget: Player
-  detectionRadius: 20
+  detectionRadius: 22
 --- !u!114 &4644514037003588243
 MonoBehaviour:
   m_ObjectHideFlags: 0
