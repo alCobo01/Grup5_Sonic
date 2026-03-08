@@ -15,17 +15,34 @@ public class EnemyRangedAttack : MonoBehaviour
     private float _attackRangeSqr;
     private WaitForSeconds _cooldownWait;
     private Transform _target;
+    private EnemyHealth _enemyHealth;
 
     private void Awake()
     {
         if (firePoint == null) firePoint = transform;
         _attackRangeSqr = attackRange * attackRange;
         _cooldownWait = new WaitForSeconds(attackCooldown);
+        _enemyHealth = GetComponent<EnemyHealth>();
     }
 
     private void Start() => _target = GameObject.FindGameObjectWithTag(tagTarget).transform;
     
-    private void OnEnable() => StartCoroutine(WaitForInitialize());
+    private void OnEnable()
+    {
+        if (_enemyHealth != null) _enemyHealth.OnDeath += HandleDeath;
+        StartCoroutine(WaitForInitialize());
+    }
+
+    private void OnDisable()
+    {
+        if (_enemyHealth != null) _enemyHealth.OnDeath -= HandleDeath;
+    }
+
+    private void HandleDeath()
+    {
+        StopAllCoroutines();
+        enabled = false;
+    }
 
     private IEnumerator WaitForInitialize()
     {

@@ -178,7 +178,12 @@ public class BossBattle : MonoBehaviour
         {
             var position = _spawnPointsPositions[Random.Range(0, _spawnPointsPositions.Count)];
             var offset = new Vector3(Random.Range(-3f, 3f), 1f, Random.Range(-3f, 3f));
-            Instantiate(ringPrefab, position + offset, Quaternion.identity);
+            var ring = Instantiate(ringPrefab, position + offset, Quaternion.identity);
+
+            if (ring.TryGetComponent<LostRing>(out var ringController))
+            {
+                ringController.lifeTime = 10f;
+            }
         }
     }
 
