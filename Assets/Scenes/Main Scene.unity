@@ -40038,6 +40038,11 @@ MonoBehaviour:
   ringPrefab: {fileID: 5581119732072322913, guid: f538b43301463418e8d9a98ee54a79d1, type: 3}
   cartelPrefab: {fileID: 5822367627901920173, guid: 351ad6fbfa4a347718284533e1d48b8c, type: 3}
   invincibilityCooldown: 1.5
+  sprintSpeedMultiplier: 3
+  sprintDuration: 2
+  sprintCooldownMin: 4
+  sprintCooldownMax: 8
+  sprintPauseDuration: 0.5
   flickerDuration: 3
   flickerStartSpeed: 0.2
   flickerEndSpeed: 0.05

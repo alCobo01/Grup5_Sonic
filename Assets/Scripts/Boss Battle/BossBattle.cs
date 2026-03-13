@@ -47,6 +47,13 @@ public class BossBattle : MonoBehaviour
     [Header("Invincibility Cooldown")]
     [SerializeField] private float invincibilityCooldown = 1.5f;
     
+    [Header("Sprint Settings")]
+    [SerializeField] private float sprintSpeedMultiplier = 2f;
+    [SerializeField] private float sprintDuration = 1f;
+    [SerializeField] private float sprintCooldownMin = 4f;
+    [SerializeField] private float sprintCooldownMax = 8f;
+    [SerializeField] private float sprintPauseDuration = 0.3f;
+    
     [Header("Death Flicker")]
     [SerializeField] private float flickerDuration = 3f;
     [SerializeField] private float flickerStartSpeed = 0.2f;
@@ -63,6 +70,8 @@ public class BossBattle : MonoBehaviour
     private bool _isTransitioning;
     private int _maxLives;
     private float _invincibilityTimer;
+    private float _currentBaseSpeed;
+    private Coroutine _sprintCoroutine;
 
     private void Awake()
     { 
@@ -144,6 +153,7 @@ public class BossBattle : MonoBehaviour
     private void HandleDeath()
     {
         _battleStarted = false;
+        StopSprintCycle();
         _agent.isStopped = true;
         _agent.ResetPath();
         
@@ -175,6 +185,30 @@ public class BossBattle : MonoBehaviour
         Destroy(eggmanHealthController.gameObject);
     }
 
+    private IEnumerator SprintCycleRoutine()
+    {
+        while (true)
+        {
+            // Wait a random cooldown before the next sprint
+            var cooldown = Random.Range(sprintCooldownMin, sprintCooldownMax);
+            yield return new WaitForSeconds(cooldown);
+            
+            // Brief pause — the visual "tell" before the sprint
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            yield return new WaitForSeconds(sprintPauseDuration);
+            
+            // Sprint toward the player
+            _agent.isStopped = false;
+            _agent.speed = _currentBaseSpeed * sprintSpeedMultiplier;
+            
+            yield return new WaitForSeconds(sprintDuration);
+            
+            // Return to normal speed
+            _agent.speed = _currentBaseSpeed;
+        }
+    }
+
     private void StartBattle()
     {
         _animationBehaviour.Trigger(LaughHash);
@@ -197,6 +231,8 @@ public class BossBattle : MonoBehaviour
     {
         _isTransitioning = true;
         _invincibilityTimer = 0f;
+        
+        StopSprintCycle();
         
         _agent.isStopped = true;
         _agent.ResetPath();
@@ -247,6 +283,9 @@ public class BossBattle : MonoBehaviour
 
     private void StartNextStage()
     {
+        // Stop any active sprint cycle from the previous stage
+        StopSprintCycle();
+        
         switch (_currentStage)
         {
             case Stage.WaitingToStart:
@@ -266,9 +305,22 @@ public class BossBattle : MonoBehaviour
                 break;
         }
         
+        _currentBaseSpeed = _agent.speed;
+        _sprintCoroutine = StartCoroutine(SprintCycleRoutine());
+        
         OnStageChanged?.Invoke(_currentStage);
     }
 
+    private void StopSprintCycle()
+    {
+        if (_sprintCoroutine != null)
+        {
+            StopCoroutine(_sprintCoroutine);
+            _sprintCoroutine = null;
+        }
+        _agent.speed = _currentBaseSpeed;
+    }
+    
     private void DestroyAllEnemies()
     {
         for (var i = _spawnedEnemies.Count - 1; i >= 0; i--)
