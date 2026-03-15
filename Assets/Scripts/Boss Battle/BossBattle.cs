@@ -189,22 +189,18 @@ public class BossBattle : MonoBehaviour
     {
         while (true)
         {
-            // Wait a random cooldown before the next sprint
             var cooldown = Random.Range(sprintCooldownMin, sprintCooldownMax);
             yield return new WaitForSeconds(cooldown);
             
-            // Brief pause — the visual "tell" before the sprint
             _agent.isStopped = true;
             _agent.ResetPath();
             yield return new WaitForSeconds(sprintPauseDuration);
             
-            // Sprint toward the player
             _agent.isStopped = false;
             _agent.speed = _currentBaseSpeed * sprintSpeedMultiplier;
             
             yield return new WaitForSeconds(sprintDuration);
             
-            // Return to normal speed
             _agent.speed = _currentBaseSpeed;
         }
     }
@@ -283,7 +279,6 @@ public class BossBattle : MonoBehaviour
 
     private void StartNextStage()
     {
-        // Stop any active sprint cycle from the previous stage
         StopSprintCycle();
         
         switch (_currentStage)

@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class WinMenu : BaseMenu
 {
     [Header("Dependencies")]
-    [SerializeField] private GameObject statsUI;
+    [SerializeField] private List<GameObject> uiToDisable;
     [SerializeField] private GameStats gameStats;
 
     [Header("Stats text to change")] 
@@ -16,7 +17,7 @@ public class WinMenu : BaseMenu
     public override void Open()
     {
         base.Open();
-        statsUI.SetActive(false);
+        uiToDisable.ForEach(u => u.SetActive(false));
         UpdateStats();
     }
 

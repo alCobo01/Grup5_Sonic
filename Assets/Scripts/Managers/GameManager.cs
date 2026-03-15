@@ -15,6 +15,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        var res = Screen.currentResolution;
+        Screen.SetResolution(res.width, res.height, FullScreenMode.MaximizedWindow);
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
+        
         Instance = this;
 
         _indexCheckPoints = PlayerPrefs.GetInt("checkPointIndex", 0);

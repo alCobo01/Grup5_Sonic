@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOverMenu : BaseMenu
 {
-    [SerializeField] private GameObject statsUI;
+    [SerializeField] private List<GameObject> uiToDisable;
     
     public override void Open()
     {
         base.Open();
-        statsUI.SetActive(false);
+        uiToDisable.ForEach(u => u.SetActive(false));
     }
 }
