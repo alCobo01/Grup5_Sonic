@@ -7,8 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PlayerRingDrop))]
 public class PlayerHealthController : MonoBehaviour, IDamageable, IRingWallet
 {
-    //public bool IsInvincible { get; set; }
-    public bool IsInvincible = true;
+    public bool IsInvincible { get; set; }
     
     [SerializeField] private float invincibilityDuration = 0.5f;
     [SerializeField] private float knockbackForce = 10f;

@@ -674,7 +674,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358357455241895257}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.52
   m_Speed: 3.5
@@ -696,13 +696,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358357455241895257}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96ddd41fa520c4e9abf9534da3eeb4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   tagTarget: Player
-  detectionRadius: 12
+  detectionRadius: 16
   chaseStopBuffer: 0.25
 --- !u!114 &2712749063565675757
 MonoBehaviour:

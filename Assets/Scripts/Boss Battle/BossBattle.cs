@@ -43,6 +43,7 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private GameObject cartelPrefab;
 
     private const float StageTransitionDuration = 2f;
+    private const float PathUpdateInterval = 0.2f;
 
     [Header("Invincibility Cooldown")]
     [SerializeField] private float invincibilityCooldown = 1.5f;
@@ -52,7 +53,9 @@ public class BossBattle : MonoBehaviour
     [SerializeField] private float sprintDuration = 1f;
     [SerializeField] private float sprintCooldownMin = 4f;
     [SerializeField] private float sprintCooldownMax = 8f;
-    [SerializeField] private float sprintPauseDuration = 0.3f;
+    
+    [Header("Rotation")]
+    [SerializeField] private float rotationSpeed = 10f;
     
     [Header("Death Flicker")]
     [SerializeField] private float flickerDuration = 3f;
@@ -72,13 +75,16 @@ public class BossBattle : MonoBehaviour
     private float _invincibilityTimer;
     private float _currentBaseSpeed;
     private Coroutine _sprintCoroutine;
+    private float _pathUpdateTimer;
 
     private void Awake()
     { 
         _agent = GetComponent<NavMeshAgent>();
         _animationBehaviour = GetComponent < AnimationBehaviour>();
         _agent.updatePosition = true;
-        _agent.updateRotation = true;
+        _agent.updateRotation = false;
+        _agent.stoppingDistance = 0f;
+        _agent.autoBraking = false;
         
         _eggmanHealth = eggmanHealthController.GetComponent<HealthBehaviour>();
         _maxLives = _eggmanHealth.CurrentLives;
@@ -109,14 +115,31 @@ public class BossBattle : MonoBehaviour
         }
         
         if (_isTransitioning) return;
+
+        _pathUpdateTimer -= Time.deltaTime;
+        if (_pathUpdateTimer <= 0f)
+        {
+            _pathUpdateTimer = PathUpdateInterval;
+            _agent.SetDestination(_target.position);
+        }
+
+        RotateTowardsPlayer();
+    }
+
+    private void RotateTowardsPlayer()
+    {
+        var direction = _target.position - transform.position;
+        direction.y = 0f;
         
-        _agent.SetDestination(_target.position);
+        if (direction.sqrMagnitude < 0.01f) return;
+        
+        var targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void OnDestroy()
     {
         BossBatlleTrigger.OnPlayerEnterTrigger -= HandleStartBattle;
-        AudioManager.Instance.PlayEnemyDeath(transform);
         
         eggmanHealthController.OnDamaged -= HandleDamage;
         eggmanHealthController.OnDeath -= HandleDeath;
@@ -192,11 +215,6 @@ public class BossBattle : MonoBehaviour
             var cooldown = Random.Range(sprintCooldownMin, sprintCooldownMax);
             yield return new WaitForSeconds(cooldown);
             
-            _agent.isStopped = true;
-            _agent.ResetPath();
-            yield return new WaitForSeconds(sprintPauseDuration);
-            
-            _agent.isStopped = false;
             _agent.speed = _currentBaseSpeed * sprintSpeedMultiplier;
             
             yield return new WaitForSeconds(sprintDuration);

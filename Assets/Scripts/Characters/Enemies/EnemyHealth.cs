@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(HealthBehaviour))]
 [RequireComponent(typeof(AnimationBehaviour))]
@@ -18,12 +19,15 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private HealthBehaviour _health;
 
     public bool IsDying { get; private set; }
+    private bool _isBeingDestroyed;
 
     private void Awake()
     {
         _animationBehaviour = GetComponent<AnimationBehaviour>();
         _health = GetComponent<HealthBehaviour>();
     }
+
+    private void OnDestroy() => _isBeingDestroyed = true;
 
     public bool IsInvulnerable { get; set; }
     
@@ -52,6 +56,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     {
         if (IsDying) return;
         IsDying = true;
+
+        if (_isBeingDestroyed || !gameObject.scene.isLoaded) return;
         
         AudioManager.Instance.PlayEnemyDeath(transform);
         _animationBehaviour.Trigger(DieHash);

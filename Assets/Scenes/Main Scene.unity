@@ -20718,11 +20718,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3145503411685217356, guid: a1038f7b14f62d44d86b071b3fa8c8cb, type: 3}
       propertyPath: soundEffects.Array.data[14].pitch
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3145503411685217356, guid: a1038f7b14f62d44d86b071b3fa8c8cb, type: 3}
       propertyPath: soundEffects.Array.data[15].pitch
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3145503411685217356, guid: a1038f7b14f62d44d86b071b3fa8c8cb, type: 3}
       propertyPath: soundEffects.Array.data[14].volume
@@ -34266,8 +34266,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1004, y: -134}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 1100.4856, y: -175}
+  m_SizeDelta: {x: 392.9712, y: 117.5145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &513184539
 MonoBehaviour:
@@ -34318,8 +34318,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -40038,9 +40038,9 @@ MonoBehaviour:
   tagTarget: Player
   stage2StartLives: 6
   stage3StartLives: 3
-  stage1Speed: 3
-  stage2Speed: 5
-  stage3Speed: 8
+  stage1Speed: 5
+  stage2Speed: 8
+  stage3Speed: 10
   stage1EnemyAmount: 4
   stage2EnemyAmount: 6
   stage3EnemyAmount: 8
@@ -40054,7 +40054,7 @@ MonoBehaviour:
   sprintDuration: 2
   sprintCooldownMin: 4
   sprintCooldownMax: 8
-  sprintPauseDuration: 0.5
+  rotationSpeed: 10
   flickerDuration: 3
   flickerStartSpeed: 0.2
   flickerEndSpeed: 0.05
@@ -128229,6 +128229,10 @@ PrefabInstance:
       value: Fence_06_Free_Prefab (735)
       objectReference: {fileID: 0}
     - target: {fileID: 1378051081099856044, guid: ce57cd76ee4a648b9ae3d7dba198e0b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378051081099856044, guid: ce57cd76ee4a648b9ae3d7dba198e0b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 39.414707
       objectReference: {fileID: 0}
@@ -128238,7 +128242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1378051081099856044, guid: ce57cd76ee4a648b9ae3d7dba198e0b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 625.4782
+      value: 625.75
       objectReference: {fileID: 0}
     - target: {fileID: 1378051081099856044, guid: ce57cd76ee4a648b9ae3d7dba198e0b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -128266,6 +128270,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1378051081099856044, guid: ce57cd76ee4a648b9ae3d7dba198e0b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378051081099856044, guid: ce57cd76ee4a648b9ae3d7dba198e0b0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

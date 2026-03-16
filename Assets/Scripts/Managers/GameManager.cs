@@ -15,8 +15,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        var res = Screen.currentResolution;
-        Screen.SetResolution(res.width, res.height, FullScreenMode.MaximizedWindow);
+        Screen.SetResolution(2560, 1440, FullScreenMode.MaximizedWindow);
         QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
         
